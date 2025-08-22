@@ -1,4 +1,4 @@
-CREATE TABLE user (
+CREATE TABLE users (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(100) NOT NULL UNIQUE,
     created_at BIGINT NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE wallet (
     gold BIGINT NOT NULL DEFAULT 0,
     created_at BIGINT NOT NULL,
     updated_at BIGINT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE daily_gold_reward (
@@ -19,6 +19,6 @@ CREATE TABLE daily_gold_reward (
     reward_date DATE NOT NULL,
     amount BIGINT NOT NULL,
     created_at BIGINT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    UNIQUE KEY uk_user_date (user_id, reward_date)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    UNIQUE (user_id, reward_date)
 );
