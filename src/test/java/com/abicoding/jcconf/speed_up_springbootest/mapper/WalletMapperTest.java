@@ -50,4 +50,23 @@ class WalletMapperTest {
         wallet.setUpdatedAt(user.getUpdatedAt());
         return wallet;
     }
+
+    @Test
+    void addGold_all_ok() {
+        UserDbDto user = given_user();
+        WalletDbDto originalWallet = given_wallet(user);
+
+        long updatedAt = Instant.now().toEpochMilli();
+        walletMapper.addGold(user.getId(), 10L, updatedAt);
+
+        WalletDbDto addedWallet = walletMapper.selectByUserId(user.getId());
+        assertThat(addedWallet.getGold()).isEqualTo(originalWallet.getGold() + 10L);
+        assertThat(addedWallet.getUpdatedAt()).isEqualTo(updatedAt);
+    }
+
+    private WalletDbDto given_wallet(UserDbDto user) {
+        WalletDbDto wallet = given_WalletDbDto(user);
+        walletMapper.insert(wallet);
+        return wallet;
+    }
 }

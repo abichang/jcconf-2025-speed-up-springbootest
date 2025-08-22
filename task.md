@@ -38,7 +38,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 #### WalletMapperTest (使用 @MybatisTest 和 H2)
 
 - [x] Task 7: WalletMapperTest - insert_and_selectByUserId
-- [ ] Task 8: WalletMapperTest - shouldAddGold
+- [x] Task 8: WalletMapperTest - addGold_all_ok
 - [ ] Task 9: WalletMapperTest - shouldReturnNullWhenWalletNotExists
 
 #### DailyGoldRewardMapperTest (使用 @MybatisTest 和 H2)
