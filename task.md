@@ -39,14 +39,14 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 - [x] Task 7: WalletMapperTest - insert_and_selectByUserId
 - [x] Task 8: WalletMapperTest - addGold_all_ok
-- [ ] Task 9: WalletMapperTest - shouldReturnNullWhenWalletNotExists
+- [ ] Task 9: WalletMapperTest - selectByUserId_wallet_not_exists
 
 #### DailyGoldRewardMapperTest (使用 @MybatisTest 和 H2)
 
-- [ ] Task 10: DailyGoldRewardMapperTest - shouldInsertReward
-- [ ] Task 11: DailyGoldRewardMapperTest - shouldCountByUserAndDate
-- [ ] Task 12: DailyGoldRewardMapperTest - shouldReturnZeroWhenNoRewardOnDate
-- [ ] Task 13: DailyGoldRewardMapperTest - shouldEnforceUniqueConstraint
+- [ ] Task 10: DailyGoldRewardMapperTest - insert_reward_all_ok
+- [ ] Task 11: DailyGoldRewardMapperTest - countByUserAndDate_exists
+- [ ] Task 12: DailyGoldRewardMapperTest - countByUserAndDate_not_exists
+- [ ] Task 13: DailyGoldRewardMapperTest - insert_reward_unique_constraint_violation
 
 ### 實體層
 
