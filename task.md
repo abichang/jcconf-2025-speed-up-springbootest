@@ -261,8 +261,8 @@ Then: 回傳null
 ##### shouldCheckClaimedTodaySuccessfully
 
 ```
-Given: dailyGoldRewardMapper.countByUserAndDate(1L, "2024-01-15")回傳1
-When: dailyGoldRewardRepository.hasClaimedToday(1L, LocalDate.of(2024,1,15))
+Given: dailyGoldRewardMapper.countByUserAndDate(1L, 20240115)回傳1
+When: dailyGoldRewardRepository.hasClaimedToday(1L, 20240115)
 Then: 回傳true
 ```
 
@@ -335,30 +335,30 @@ Then: 回傳null
 
 ```
 Given: 資料庫有user記錄
-When: dailyGoldRewardMapper.insertReward(DailyGoldReward(userId=1L, rewardDate="2024-01-15", amount=10))
+When: dailyGoldRewardMapper.insertReward(DailyGoldReward(userId=1L, rewardDate=20240115, amount=10))
 Then: 資料庫新增daily_gold_reward記錄
 ```
 
 ##### shouldCountByUserAndDate
 
 ```
-Given: 資料庫有user_id=1在2024-01-15的reward記錄
-When: dailyGoldRewardMapper.countByUserAndDate(1L, "2024-01-15")
+Given: 資料庫有user_id=1在20240115的reward記錄
+When: dailyGoldRewardMapper.countByUserAndDate(1L, 20240115)
 Then: 回傳1
 ```
 
 ##### shouldReturnZeroWhenNoRewardOnDate
 
 ```
-Given: 資料庫沒有user_id=1在2024-01-16的reward記錄
-When: dailyGoldRewardMapper.countByUserAndDate(1L, "2024-01-16")
+Given: 資料庫沒有user_id=1在20240116的reward記錄
+When: dailyGoldRewardMapper.countByUserAndDate(1L, 20240116)
 Then: 回傳0
 ```
 
 ##### shouldEnforceUniqueConstraint
 
 ```
-Given: 資料庫已有user_id=1在2024-01-15的記錄
+Given: 資料庫已有user_id=1在20240115的記錄
 When: 嘗試插入相同user_id和date的記錄
 Then: 拋出數據庫約束異常
 ```
@@ -397,7 +397,7 @@ CREATE TABLE daily_gold_reward
 (
     id          BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id     BIGINT NOT NULL,
-    reward_date DATE   NOT NULL,
+    reward_date INT    NOT NULL,
     amount      BIGINT NOT NULL,
     created_at  BIGINT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user (id),

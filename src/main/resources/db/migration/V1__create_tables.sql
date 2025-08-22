@@ -16,7 +16,7 @@ CREATE TABLE wallet (
 CREATE TABLE daily_gold_reward (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id BIGINT NOT NULL,
-    reward_date DATE NOT NULL,
+    reward_date INT NOT NULL,
     amount BIGINT NOT NULL,
     created_at BIGINT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
