@@ -13,8 +13,8 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 ### 資料庫相關
 - [x] Task 1: 建立資料庫 schema (user, wallet, daily_gold_reward 表格)
-- [ ] Task 2: 建立 Flyway migration 檔案
-- [ ] Task 3: 設定 H2 測試資料庫相關配置
+- [x] Task 2: 建立 Flyway migration 檔案
+- [x] Task 3: 設定 H2 測試資料庫相關配置
 
 ### 實體和 Mapper 層
 - [ ] Task 4: 建立 User, Wallet, DailyGoldReward entity 物件
