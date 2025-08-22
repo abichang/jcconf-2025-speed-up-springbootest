@@ -24,26 +24,66 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 ### Mapper 層
 - [x] Task 4: 建立 UserDbDto, WalletDbDto, DailyGoldRewardDbDto (用於 Mapper 層)
 - [x] Task 5: 建立 UserMapper, WalletMapper, DailyGoldRewardMapper interface (使用 annotation，操作 DbDto)
-- [ ] Task 6: 實作 UserMapperTest, WalletMapperTest, DailyGoldRewardMapperTest (使用 @MybatisTest 和 H2)
+
+#### UserMapperTest (使用 @MybatisTest 和 H2)
+- [ ] Task 6: UserMapperTest - shouldSelectUserById
+- [ ] Task 7: UserMapperTest - shouldInsertUserRecord
+
+#### WalletMapperTest (使用 @MybatisTest 和 H2)
+- [ ] Task 8: WalletMapperTest - shouldInsertAndSelectWallet
+- [ ] Task 9: WalletMapperTest - shouldUpdateGold
+- [ ] Task 10: WalletMapperTest - shouldReturnNullWhenWalletNotExists
+
+#### DailyGoldRewardMapperTest (使用 @MybatisTest 和 H2)
+- [ ] Task 11: DailyGoldRewardMapperTest - shouldInsertReward
+- [ ] Task 12: DailyGoldRewardMapperTest - shouldCountByUserAndDate
+- [ ] Task 13: DailyGoldRewardMapperTest - shouldReturnZeroWhenNoRewardOnDate
+- [ ] Task 14: DailyGoldRewardMapperTest - shouldEnforceUniqueConstraint
 
 ### 實體層
-- [ ] Task 7: 建立 User, Wallet, DailyGoldReward entity 物件 (用於 Repository Interface + Service 層)
+- [ ] Task 15: 建立 User, Wallet, DailyGoldReward entity 物件 (用於 Repository Interface + Service 層)
 
 ### Repository 層
-- [ ] Task 8: 建立 UserRepository, WalletRepository, DailyGoldRewardRepository interface
-- [ ] Task 9: 實作 UserRepositoryImpl, WalletRepositoryImpl, DailyGoldRewardRepositoryImpl
-- [ ] Task 10: 實作 UserRepositoryImplTest, WalletRepositoryImplTest, DailyGoldRewardRepositoryImplTest (Mockito.mock)
+- [ ] Task 16: 建立 UserRepository, WalletRepository, DailyGoldRewardRepository interface
+- [ ] Task 17: 實作 UserRepositoryImpl, WalletRepositoryImpl, DailyGoldRewardRepositoryImpl
+
+#### UserRepositoryImplTest (Mockito.mock)
+- [ ] Task 18: UserRepositoryImplTest - shouldGetUserByIdSuccessfully
+- [ ] Task 19: UserRepositoryImplTest - shouldReturnNullWhenUserNotExists
+
+#### WalletRepositoryImplTest (Mockito.mock)
+- [ ] Task 20: WalletRepositoryImplTest - shouldGetWalletByUserIdSuccessfully
+- [ ] Task 21: WalletRepositoryImplTest - shouldUpdateGoldSuccessfully
+- [ ] Task 22: WalletRepositoryImplTest - shouldReturnNullWhenWalletNotExists
+
+#### DailyGoldRewardRepositoryImplTest (Mockito.mock)
+- [ ] Task 23: DailyGoldRewardRepositoryImplTest - shouldCheckClaimedTodaySuccessfully
+- [ ] Task 24: DailyGoldRewardRepositoryImplTest - shouldCreateRewardSuccessfully
+- [ ] Task 25: DailyGoldRewardRepositoryImplTest - shouldHandleMapperException
 
 ### Service 層
-- [ ] Task 11: 實作 DailyGoldRewardService
-- [ ] Task 12: 實作 DailyGoldRewardServiceTest (Mockito.mock)
+- [ ] Task 26: 實作 DailyGoldRewardService
+
+#### DailyGoldRewardServiceTest (Mockito.mock)
+- [ ] Task 27: DailyGoldRewardServiceTest - shouldClaimDailyGoldenWhenUserExistsAndNotClaimedToday
+- [ ] Task 28: DailyGoldRewardServiceTest - shouldThrowExceptionWhenUserNotExists
+- [ ] Task 29: DailyGoldRewardServiceTest - shouldThrowExceptionWhenAlreadyClaimedToday
+- [ ] Task 30: DailyGoldRewardServiceTest - shouldThrowExceptionWhenWalletNotExists
+- [ ] Task 31: DailyGoldRewardServiceTest - shouldCalculateUTCDateCorrectly
 
 ### Controller 層
-- [ ] Task 13: 建立 DailyGoldRewardController
-- [ ] Task 14: 實作 DailyGoldRewardControllerTest (使用 @SpringBootTest)
+- [ ] Task 32: 建立 DailyGoldRewardController
+
+#### DailyGoldRewardControllerTest (使用 @SpringBootTest)
+- [ ] Task 33: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
+- [ ] Task 34: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
+- [ ] Task 35: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
+- [ ] Task 36: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
+- [ ] Task 37: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
+- [ ] Task 38: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
 
 ### 文件
-- [x] Task 15: 建立 task.md 檔案記錄所有測試案例和任務
+- [x] Task 39: 建立 task.md 檔案記錄所有測試案例和任務
 
 ## 測試策略
 - **Controller**: @SpringBootTest + Real Database
