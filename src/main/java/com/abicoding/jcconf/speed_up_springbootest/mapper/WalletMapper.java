@@ -1,0 +1,31 @@
+package com.abicoding.jcconf.speed_up_springbootest.mapper;
+
+import com.abicoding.jcconf.speed_up_springbootest.dto.WalletDbDto;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+@Mapper
+public interface WalletMapper {
+    
+    @Select("""
+            SELECT user_id, gold, created_at, updated_at 
+            FROM wallet 
+            WHERE user_id = #{userId}
+            """)
+    WalletDbDto selectByUserId(Long userId);
+    
+    @Insert("""
+            INSERT INTO wallet (user_id, gold, created_at, updated_at) 
+            VALUES (#{userId}, #{gold}, #{createdAt}, #{updatedAt})
+            """)
+    void insert(WalletDbDto wallet);
+    
+    @Update("""
+            UPDATE wallet 
+            SET gold = #{gold}, updated_at = #{updatedAt} 
+            WHERE user_id = #{userId}
+            """)
+    void updateGold(Long userId, Long gold, Long updatedAt);
+}

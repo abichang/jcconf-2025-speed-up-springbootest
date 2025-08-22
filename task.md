@@ -23,7 +23,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 ### Mapper 層
 - [x] Task 4: 建立 UserDbDto, WalletDbDto, DailyGoldRewardDbDto (用於 Mapper 層)
-- [ ] Task 5: 建立 UserMapper, WalletMapper, DailyGoldRewardMapper interface (使用 annotation，操作 DbDto)
+- [x] Task 5: 建立 UserMapper, WalletMapper, DailyGoldRewardMapper interface (使用 annotation，操作 DbDto)
 - [ ] Task 6: 實作 UserMapperTest, WalletMapperTest, DailyGoldRewardMapperTest (使用 @MybatisTest 和 H2)
 
 ### 實體層
