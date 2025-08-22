@@ -43,65 +43,64 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 #### DailyGoldRewardMapperTest (使用 @MybatisTest 和 H2)
 
-- [ ] Task 10: DailyGoldRewardMapperTest - insert_reward_all_ok
-- [ ] Task 11: DailyGoldRewardMapperTest - countByUserAndDate_exists
-- [ ] Task 12: DailyGoldRewardMapperTest - countByUserAndDate_not_exists
-- [ ] Task 13: DailyGoldRewardMapperTest - insert_reward_unique_constraint_violation
+- [ ] Task 10: DailyGoldRewardMapperTest - insert_and_countByUserAndDate
+- [ ] Task 11: DailyGoldRewardMapperTest - countByUserAndDate_not_exists
+- [ ] Task 12: DailyGoldRewardMapperTest - insert_reward_unique_constraint_violation
 
 ### 實體層
 
-- [ ] Task 14: 建立 User, Wallet, DailyGoldReward entity 物件 (用於 Repository Interface + Service 層)
+- [ ] Task 13: 建立 User, Wallet, DailyGoldReward entity 物件 (用於 Repository Interface + Service 層)
 
 ### Repository 層
 
-- [ ] Task 15: 建立 UserRepository, WalletRepository, DailyGoldRewardRepository interface
-- [ ] Task 16: 實作 UserRepositoryImpl, WalletRepositoryImpl, DailyGoldRewardRepositoryImpl
+- [ ] Task 14: 建立 UserRepository, WalletRepository, DailyGoldRewardRepository interface
+- [ ] Task 15: 實作 UserRepositoryImpl, WalletRepositoryImpl, DailyGoldRewardRepositoryImpl
 
 #### UserRepositoryImplTest (Mockito.mock)
 
-- [ ] Task 17: UserRepositoryImplTest - shouldGetUserByIdSuccessfully
-- [ ] Task 18: UserRepositoryImplTest - shouldReturnNullWhenUserNotExists
+- [ ] Task 16: UserRepositoryImplTest - shouldGetUserByIdSuccessfully
+- [ ] Task 17: UserRepositoryImplTest - shouldReturnNullWhenUserNotExists
 
 #### WalletRepositoryImplTest (Mockito.mock)
 
-- [ ] Task 19: WalletRepositoryImplTest - shouldGetWalletByUserIdSuccessfully
-- [ ] Task 20: WalletRepositoryImplTest - shouldUpdateGoldSuccessfully
-- [ ] Task 21: WalletRepositoryImplTest - shouldReturnNullWhenWalletNotExists
+- [ ] Task 18: WalletRepositoryImplTest - shouldGetWalletByUserIdSuccessfully
+- [ ] Task 19: WalletRepositoryImplTest - shouldUpdateGoldSuccessfully
+- [ ] Task 20: WalletRepositoryImplTest - shouldReturnNullWhenWalletNotExists
 
 #### DailyGoldRewardRepositoryImplTest (Mockito.mock)
 
-- [ ] Task 22: DailyGoldRewardRepositoryImplTest - shouldCheckClaimedTodaySuccessfully
-- [ ] Task 23: DailyGoldRewardRepositoryImplTest - shouldCreateRewardSuccessfully
-- [ ] Task 24: DailyGoldRewardRepositoryImplTest - shouldHandleMapperException
+- [ ] Task 21: DailyGoldRewardRepositoryImplTest - shouldCheckClaimedTodaySuccessfully
+- [ ] Task 22: DailyGoldRewardRepositoryImplTest - shouldCreateRewardSuccessfully
+- [ ] Task 23: DailyGoldRewardRepositoryImplTest - shouldHandleMapperException
 
 ### Service 層
 
-- [ ] Task 25: 實作 DailyGoldRewardService
+- [ ] Task 24: 實作 DailyGoldRewardService
 
 #### DailyGoldRewardServiceTest (Mockito.mock)
 
-- [ ] Task 26: DailyGoldRewardServiceTest - shouldClaimDailyGoldenWhenUserExistsAndNotClaimedToday
-- [ ] Task 27: DailyGoldRewardServiceTest - shouldThrowExceptionWhenUserNotExists
-- [ ] Task 28: DailyGoldRewardServiceTest - shouldThrowExceptionWhenAlreadyClaimedToday
-- [ ] Task 29: DailyGoldRewardServiceTest - shouldThrowExceptionWhenWalletNotExists
-- [ ] Task 30: DailyGoldRewardServiceTest - shouldCalculateUTCDateCorrectly
+- [ ] Task 25: DailyGoldRewardServiceTest - shouldClaimDailyGoldenWhenUserExistsAndNotClaimedToday
+- [ ] Task 26: DailyGoldRewardServiceTest - shouldThrowExceptionWhenUserNotExists
+- [ ] Task 27: DailyGoldRewardServiceTest - shouldThrowExceptionWhenAlreadyClaimedToday
+- [ ] Task 28: DailyGoldRewardServiceTest - shouldThrowExceptionWhenWalletNotExists
+- [ ] Task 29: DailyGoldRewardServiceTest - shouldCalculateUTCDateCorrectly
 
 ### Controller 層
 
-- [ ] Task 31: 建立 DailyGoldRewardController
+- [ ] Task 30: 建立 DailyGoldRewardController
 
 #### DailyGoldRewardControllerTest (使用 @SpringBootTest)
 
-- [ ] Task 32: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
-- [ ] Task 33: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
-- [ ] Task 34: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
-- [ ] Task 35: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
-- [ ] Task 36: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
-- [ ] Task 37: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
+- [ ] Task 31: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
+- [ ] Task 32: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
+- [ ] Task 33: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
+- [ ] Task 34: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
+- [ ] Task 35: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
+- [ ] Task 36: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
 
 ### 文件
 
-- [x] Task 38: 建立 task.md 檔案記錄所有測試案例和任務
+- [x] Task 37: 建立 task.md 檔案記錄所有測試案例和任務
 
 ## 測試策略
 
