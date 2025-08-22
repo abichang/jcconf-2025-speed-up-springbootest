@@ -9,6 +9,11 @@
 ## 架構設計
 Controller → Service → Repository Interface → Repository Impl → Mapper
 
+### 物件分層說明
+- **Entity**: 業務邏輯層物件，在 Repository Interface 和 Service 層使用
+- **DbDto**: 資料庫層物件，只在 Mapper 層使用
+- **Repository Impl**: 負責 DbDto ↔ Entity 轉換
+
 ## 開發任務清單
 
 ### 資料庫相關
@@ -16,26 +21,29 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - [x] Task 2: 建立 Flyway migration 檔案
 - [x] Task 3: 設定 H2 測試資料庫相關配置
 
-### 實體和 Mapper 層
-- [ ] Task 4: 建立 User, Wallet, DailyGoldReward entity 物件
-- [ ] Task 5: 建立 UserMapper, WalletMapper, DailyGoldRewardMapper interface (使用 annotation)
+### Mapper 層
+- [ ] Task 4: 建立 UserDbDto, WalletDbDto, DailyGoldRewardDbDto (用於 Mapper 層)
+- [ ] Task 5: 建立 UserMapper, WalletMapper, DailyGoldRewardMapper interface (使用 annotation，操作 DbDto)
 - [ ] Task 6: 實作 UserMapperTest, WalletMapperTest, DailyGoldRewardMapperTest (使用 @MybatisTest 和 H2)
 
+### 實體層
+- [ ] Task 7: 建立 User, Wallet, DailyGoldReward entity 物件 (用於 Repository Interface + Service 層)
+
 ### Repository 層
-- [ ] Task 7: 建立 UserRepository, WalletRepository, DailyGoldRewardRepository interface
-- [ ] Task 8: 實作 UserRepositoryImpl, WalletRepositoryImpl, DailyGoldRewardRepositoryImpl
-- [ ] Task 9: 實作 UserRepositoryImplTest, WalletRepositoryImplTest, DailyGoldRewardRepositoryImplTest (Mockito.mock)
+- [ ] Task 8: 建立 UserRepository, WalletRepository, DailyGoldRewardRepository interface
+- [ ] Task 9: 實作 UserRepositoryImpl, WalletRepositoryImpl, DailyGoldRewardRepositoryImpl
+- [ ] Task 10: 實作 UserRepositoryImplTest, WalletRepositoryImplTest, DailyGoldRewardRepositoryImplTest (Mockito.mock)
 
 ### Service 層
-- [ ] Task 10: 實作 DailyGoldRewardService
-- [ ] Task 11: 實作 DailyGoldRewardServiceTest (Mockito.mock)
+- [ ] Task 11: 實作 DailyGoldRewardService
+- [ ] Task 12: 實作 DailyGoldRewardServiceTest (Mockito.mock)
 
 ### Controller 層
-- [ ] Task 12: 建立 DailyGoldRewardController
-- [ ] Task 13: 實作 DailyGoldRewardControllerTest (使用 @SpringBootTest)
+- [ ] Task 13: 建立 DailyGoldRewardController
+- [ ] Task 14: 實作 DailyGoldRewardControllerTest (使用 @SpringBootTest)
 
 ### 文件
-- [x] Task 14: 建立 task.md 檔案記錄所有測試案例和任務
+- [x] Task 15: 建立 task.md 檔案記錄所有測試案例和任務
 
 ## 測試策略
 - **Controller**: @SpringBootTest + Real Database
