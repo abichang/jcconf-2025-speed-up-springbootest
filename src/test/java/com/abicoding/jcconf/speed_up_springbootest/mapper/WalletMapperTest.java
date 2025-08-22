@@ -1,0 +1,53 @@
+package com.abicoding.jcconf.speed_up_springbootest.mapper;
+
+import com.abicoding.jcconf.speed_up_springbootest.dto.UserDbDto;
+import com.abicoding.jcconf.speed_up_springbootest.dto.WalletDbDto;
+import org.junit.jupiter.api.Test;
+import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.Instant;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@MybatisTest
+class WalletMapperTest {
+
+    @Autowired
+    private WalletMapper walletMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Test
+    void insert_and_selectByUserId() {
+        UserDbDto user = given_user();
+
+        WalletDbDto insertWallet = given_WalletDbDto(user);
+        walletMapper.insert(insertWallet);
+
+        WalletDbDto foundWallet = walletMapper.selectByUserId(user.getId());
+        assertThat(foundWallet)
+                .isNotNull()
+                .isEqualTo(insertWallet);
+    }
+
+    private UserDbDto given_user() {
+        long now = Instant.now().toEpochMilli();
+        UserDbDto user = new UserDbDto();
+        user.setUsername("testuser");
+        user.setCreatedAt(now);
+        user.setUpdatedAt(now);
+        userMapper.insert(user);
+        return user;
+    }
+
+    private WalletDbDto given_WalletDbDto(UserDbDto user) {
+        WalletDbDto wallet = new WalletDbDto();
+        wallet.setUserId(user.getId());
+        wallet.setGold(500L);
+        wallet.setCreatedAt(user.getCreatedAt());
+        wallet.setUpdatedAt(user.getUpdatedAt());
+        return wallet;
+    }
+}

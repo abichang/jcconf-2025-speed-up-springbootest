@@ -37,7 +37,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 #### WalletMapperTest (使用 @MybatisTest 和 H2)
 
-- [ ] Task 7: WalletMapperTest - shouldInsertAndSelectWallet
+- [x] Task 7: WalletMapperTest - insert_and_selectByUserId
 - [ ] Task 8: WalletMapperTest - shouldUpdateGold
 - [ ] Task 9: WalletMapperTest - shouldReturnNullWhenWalletNotExists
 
