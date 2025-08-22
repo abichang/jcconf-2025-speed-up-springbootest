@@ -38,7 +38,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 #### WalletMapperTest (使用 @MybatisTest 和 H2)
 
 - [x] Task 7: WalletMapperTest - insert_and_selectByUserId
-- [ ] Task 8: WalletMapperTest - shouldUpdateGold
+- [ ] Task 8: WalletMapperTest - shouldAddGold
 - [ ] Task 9: WalletMapperTest - shouldReturnNullWhenWalletNotExists
 
 #### DailyGoldRewardMapperTest (使用 @MybatisTest 和 H2)
@@ -172,7 +172,7 @@ Given: userRepository.getUserById(1L)回傳User，
        dailyGoldRewardRepository.hasClaimedToday(1L, today)回傳false，
        walletRepository.getWalletByUserId(1L)回傳Wallet(gold=500)
 When: service.claimDailyGolden(1L)
-Then: 呼叫walletRepository.updateGold(1L, 510)，
+Then: 呼叫walletRepository.addGold(1L, 10)，
       呼叫dailyGoldRewardRepository.createReward(1L, today, 10)，回傳成功結果
 ```
 
@@ -240,11 +240,11 @@ When: walletRepository.getWalletByUserId(1L)
 Then: 回傳Wallet物件
 ```
 
-##### shouldUpdateGoldSuccessfully
+##### shouldAddGoldSuccessfully
 
 ```
-Given: walletMapper.updateGold(1L, 510)執行成功
-When: walletRepository.updateGold(1L, 510)
+Given: walletMapper.addGold(1L, 10, updatedAt)執行成功
+When: walletRepository.addGold(1L, 10)
 Then: 執行無異常
 ```
 
@@ -313,11 +313,11 @@ When: walletMapper.insertWallet(Wallet(userId=1L, gold=500))
 Then: 回傳Wallet(gold=500)
 ```
 
-##### shouldUpdateGold
+##### shouldAddGold
 
 ```
 Given: 資料庫有wallet記錄gold=500
-When: walletMapper.updateGold(1L, 510)
+When: walletMapper.addGold(1L, 10, updatedAt)
 Then: 資料庫記錄更新為gold=510
 ```
 

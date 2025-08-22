@@ -24,8 +24,8 @@ public interface WalletMapper {
     
     @Update("""
             UPDATE wallet 
-            SET gold = #{gold}, updated_at = #{updatedAt} 
+            SET gold = gold + #{amount}, updated_at = #{updatedAt} 
             WHERE user_id = #{userId}
             """)
-    void updateGold(Long userId, Long gold, Long updatedAt);
+    void addGold(Long userId, Long amount, Long updatedAt);
 }
