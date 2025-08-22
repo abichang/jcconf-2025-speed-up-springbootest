@@ -69,4 +69,13 @@ class WalletMapperTest {
         walletMapper.insert(wallet);
         return wallet;
     }
+
+    @Test
+    void selectByUserId_wallet_not_exists() {
+        Long nonExistentUserId = 999L;
+
+        WalletDbDto actualWallet = walletMapper.selectByUserId(nonExistentUserId);
+
+        assertThat(actualWallet).isNull();
+    }
 }
