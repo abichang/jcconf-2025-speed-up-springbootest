@@ -7,8 +7,6 @@ import com.abicoding.jcconf.speed_up_springbootest.service.UserNotFoundException
 import com.abicoding.jcconf.speed_up_springbootest.service.UserRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
-
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
@@ -24,15 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
         if (userDbDto == null) {
             throw new UserNotFoundException("userId=%s".formatted(userId));
         }
-        return convertToEntity(userDbDto);
+        return userDbDto.toEntity();
     }
 
-    private User convertToEntity(UserDbDto userDbDto) {
-        User user = new User();
-        user.setId(userDbDto.getId());
-        user.setUsername(userDbDto.getUsername());
-        user.setCreatedAt(Instant.ofEpochMilli(userDbDto.getCreatedAt()));
-        user.setUpdatedAt(Instant.ofEpochMilli(userDbDto.getUpdatedAt()));
-        return user;
-    }
 }
