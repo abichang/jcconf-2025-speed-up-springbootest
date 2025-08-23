@@ -74,8 +74,8 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 #### DailyGoldRewardServiceTest (Mockito.mock)
 
-- [ ] Task 29: DailyGoldRewardServiceTest - claim_all_ok
-- [ ] Task 30: DailyGoldRewardServiceTest - duplicate_claim
+- [x] Task 29: DailyGoldRewardServiceTest - claim_all_ok
+- [x] Task 30: DailyGoldRewardServiceTest - duplicate_claim
 
 ### Controller 層
 
