@@ -1,5 +1,9 @@
 package com.abicoding.jcconf.speed_up_springbootest.mapper;
 
+import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.UserDbDto;
+import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.UserMapper;
+import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.WalletDbDto;
+import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.WalletMapper;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;

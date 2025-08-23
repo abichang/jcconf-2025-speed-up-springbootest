@@ -1,4 +1,4 @@
-package com.abicoding.jcconf.speed_up_springbootest.mapper;
+package com.abicoding.jcconf.speed_up_springbootest.adapter.mapper;
 
 import lombok.Data;
 

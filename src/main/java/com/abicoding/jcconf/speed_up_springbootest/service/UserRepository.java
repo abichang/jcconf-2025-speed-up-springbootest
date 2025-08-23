@@ -1,4 +1,4 @@
-package com.abicoding.jcconf.speed_up_springbootest.repository;
+package com.abicoding.jcconf.speed_up_springbootest.service;
 
 import com.abicoding.jcconf.speed_up_springbootest.entity.User;
 
