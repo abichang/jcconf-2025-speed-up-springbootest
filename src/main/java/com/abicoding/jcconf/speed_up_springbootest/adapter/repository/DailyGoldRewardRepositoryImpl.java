@@ -28,17 +28,7 @@ public class DailyGoldRewardRepositoryImpl implements DailyGoldRewardRepository 
 
     @Override
     public void claim(DailyGoldReward reward) {
-        DailyGoldRewardDbDto dbDto = convertToDbDto(reward);
+        DailyGoldRewardDbDto dbDto = DailyGoldRewardDbDto.from(reward);
         dailyGoldRewardMapper.insert(dbDto);
-    }
-
-    private DailyGoldRewardDbDto convertToDbDto(DailyGoldReward reward) {
-        DailyGoldRewardDbDto dbDto = new DailyGoldRewardDbDto();
-        dbDto.setId(reward.getId());
-        dbDto.setUserId(reward.getUserId());
-        dbDto.setRewardDate(reward.getRewardDate());
-        dbDto.setAmount(reward.getAmount());
-        dbDto.setCreatedAt(reward.getCreatedAt().toEpochMilli());
-        return dbDto;
     }
 }
