@@ -1,6 +1,7 @@
 package com.abicoding.jcconf.speed_up_springbootest.service;
 
 import com.abicoding.jcconf.speed_up_springbootest.entity.DailyGoldReward;
+import com.abicoding.jcconf.speed_up_springbootest.entity.RewardDate;
 import com.abicoding.jcconf.speed_up_springbootest.util.TimeUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -44,7 +45,7 @@ class DailyGoldRewardServiceTest {
         assertEquals(userId, capturedReward.getUserId());
         assertEquals(10L, capturedReward.getAmount());
         assertEquals(now, capturedReward.getCreatedAt());
-        assertEquals(TimeUtils.toYYYYMMDD(now), capturedReward.getRewardDate());
+        assertEquals(RewardDate.create(now), capturedReward.getRewardDate());
     }
 
     @Test

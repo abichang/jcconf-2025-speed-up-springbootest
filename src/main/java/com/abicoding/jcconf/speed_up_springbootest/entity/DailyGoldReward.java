@@ -8,7 +8,7 @@ import java.time.Instant;
 public class DailyGoldReward {
     private Long id;
     private Long userId;
-    private Integer rewardDate;
+    private RewardDate rewardDate;
     private Long amount;
     private Instant createdAt;
 }

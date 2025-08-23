@@ -4,6 +4,7 @@ import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.DailyGoldRewar
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.DailyGoldRewardMapper;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.DailyGoldRewardRepositoryImpl;
 import com.abicoding.jcconf.speed_up_springbootest.entity.DailyGoldReward;
+import com.abicoding.jcconf.speed_up_springbootest.entity.RewardDate;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -66,7 +67,7 @@ class DailyGoldRewardRepositoryImplTest {
         DailyGoldReward reward = new DailyGoldReward();
         reward.setId(1L);
         reward.setUserId(1L);
-        reward.setRewardDate(20240115);
+        reward.setRewardDate(RewardDate.create(Instant.parse("2024-01-15T10:00:00Z")));
         reward.setAmount(10L);
         reward.setCreatedAt(Instant.now());
         return reward;
@@ -79,7 +80,7 @@ class DailyGoldRewardRepositoryImplTest {
         DailyGoldRewardDbDto dailyGoldRewardDbDto = dailyGoldRewardDbDtoCaptor.getValue();
         assertThat(dailyGoldRewardDbDto.getId()).isEqualTo(reward.getId());
         assertThat(dailyGoldRewardDbDto.getUserId()).isEqualTo(reward.getUserId());
-        assertThat(dailyGoldRewardDbDto.getRewardDate()).isEqualTo(reward.getRewardDate());
+        assertThat(dailyGoldRewardDbDto.getRewardDate()).isEqualTo(reward.getRewardDate().getValue());
         assertThat(dailyGoldRewardDbDto.getAmount()).isEqualTo(reward.getAmount());
         assertThat(dailyGoldRewardDbDto.getCreatedAt()).isEqualTo(reward.getCreatedAt().toEpochMilli());
     }

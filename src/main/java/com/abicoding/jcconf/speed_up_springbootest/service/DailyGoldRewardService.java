@@ -1,6 +1,7 @@
 package com.abicoding.jcconf.speed_up_springbootest.service;
 
 import com.abicoding.jcconf.speed_up_springbootest.entity.DailyGoldReward;
+import com.abicoding.jcconf.speed_up_springbootest.entity.RewardDate;
 import com.abicoding.jcconf.speed_up_springbootest.util.TimeUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +40,7 @@ public class DailyGoldRewardService {
 
         DailyGoldReward reward = new DailyGoldReward();
         reward.setUserId(userId);
-        reward.setRewardDate(TimeUtils.toYYYYMMDD(now));
+        reward.setRewardDate(RewardDate.create(now));
         reward.setAmount(DAILY_GOLD_AMOUNT);
         reward.setCreatedAt(now);
         dailyGoldRewardRepository.claim(reward);
