@@ -5,8 +5,7 @@ import com.abicoding.jcconf.speed_up_springbootest.util.TimeUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
 
 import java.time.Instant;
 
@@ -15,20 +14,17 @@ import static org.mockito.Mockito.*;
 
 class DailyGoldRewardServiceTest {
 
-    @Mock
     private UserRepository userRepository;
-    
-    @Mock
     private WalletRepository walletRepository;
-    
-    @Mock
     private DailyGoldRewardRepository dailyGoldRewardRepository;
-
     private DailyGoldRewardService dailyGoldRewardService;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        userRepository = Mockito.mock(UserRepository.class);
+        walletRepository = Mockito.mock(WalletRepository.class);
+        dailyGoldRewardRepository = Mockito.mock(DailyGoldRewardRepository.class);
+        
         dailyGoldRewardService = new DailyGoldRewardService(
             userRepository, 
             walletRepository, 
