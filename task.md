@@ -76,23 +76,24 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 - [x] Task 29: DailyGoldRewardServiceTest - claim_all_ok
 - [x] Task 30: DailyGoldRewardServiceTest - duplicate_claim
+- [ ] Task 31: DailyGoldRewardServiceTest - handle_user_not_found
 
 ### Controller 層
 
-- [ ] Task 31: 建立 DailyGoldRewardController
+- [ ] Task 32: 建立 DailyGoldRewardController
 
 #### DailyGoldRewardControllerTest (使用 @SpringBootTest)
 
-- [ ] Task 32: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
-- [ ] Task 33: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
-- [ ] Task 34: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
-- [ ] Task 35: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
-- [ ] Task 36: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
-- [ ] Task 37: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
+- [ ] Task 33: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
+- [ ] Task 34: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
+- [ ] Task 35: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
+- [ ] Task 36: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
+- [ ] Task 37: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
+- [ ] Task 38: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
 
 ### 文件
 
-- [x] Task 38: 建立 task.md 檔案記錄所有測試案例和任務
+- [x] Task 39: 建立 task.md 檔案記錄所有測試案例和任務
 
 ## 測試策略
 
@@ -171,6 +172,14 @@ Then: 呼叫walletRepository.addGold(1L, 10, now)，
 Given: dailyGoldRewardRepository.hasClaimed(1L, now)回傳true
 When: service.claim(1L)
 Then: 拋出DailyGoldenClaimedException("userId=1")
+```
+
+#### handle_user_not_found
+
+```
+Given: userRepository.getById(999L)回傳null
+When: service.claim(999L)
+Then: 拋出UserNotFoundException("userId=999")
 ```
 
 ### 3. Repository 測試 (Mockito.mock)
