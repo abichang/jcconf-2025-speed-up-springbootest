@@ -53,7 +53,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 ### Repository 層
 
-- [ ] Task 14: 建立 UserRepository interface
+- [x] Task 14: 建立 UserRepository interface
 - [ ] Task 15: 實作 UserRepositoryImpl
 - [ ] Task 16: UserRepositoryImplTest  (Mockito.mock) - shouldGetUserByIdSuccessfully
 - [ ] Task 17: UserRepositoryImplTest  (Mockito.mock) - shouldReturnNullWhenUserNotExists
