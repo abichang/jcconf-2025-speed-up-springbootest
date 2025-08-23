@@ -53,54 +53,49 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 ### Repository 層
 
-- [ ] Task 14: 建立 UserRepository, WalletRepository, DailyGoldRewardRepository interface
-- [ ] Task 15: 實作 UserRepositoryImpl, WalletRepositoryImpl, DailyGoldRewardRepositoryImpl
-
-#### UserRepositoryImplTest (Mockito.mock)
-
-- [ ] Task 16: UserRepositoryImplTest - shouldGetUserByIdSuccessfully
-- [ ] Task 17: UserRepositoryImplTest - shouldReturnNullWhenUserNotExists
-
-#### WalletRepositoryImplTest (Mockito.mock)
-
-- [ ] Task 18: WalletRepositoryImplTest - shouldGetWalletByUserIdSuccessfully
-- [ ] Task 19: WalletRepositoryImplTest - shouldUpdateGoldSuccessfully
-- [ ] Task 20: WalletRepositoryImplTest - shouldReturnNullWhenWalletNotExists
-
-#### DailyGoldRewardRepositoryImplTest (Mockito.mock)
-
-- [ ] Task 21: DailyGoldRewardRepositoryImplTest - shouldCheckClaimedTodaySuccessfully
-- [ ] Task 22: DailyGoldRewardRepositoryImplTest - shouldCreateRewardSuccessfully
-- [ ] Task 23: DailyGoldRewardRepositoryImplTest - shouldHandleMapperException
+- [ ] Task 14: 建立 UserRepository interface
+- [ ] Task 15: 實作 UserRepositoryImpl
+- [ ] Task 16: UserRepositoryImplTest  (Mockito.mock) - shouldGetUserByIdSuccessfully
+- [ ] Task 17: UserRepositoryImplTest  (Mockito.mock) - shouldReturnNullWhenUserNotExists
+- [ ] Task 18: 建立 WalletRepository interface
+- [ ] Task 19: 實作 WalletRepositoryImpl
+- [ ] Task 20: WalletRepositoryImplTest  (Mockito.mock) - shouldGetWalletByUserIdSuccessfully
+- [ ] Task 21: WalletRepositoryImplTest  (Mockito.mock) - shouldUpdateGoldSuccessfully
+- [ ] Task 22: WalletRepositoryImplTest  (Mockito.mock) - shouldReturnNullWhenWalletNotExists
+- [ ] Task 23: 建立 DailyGoldRewardRepository interface
+- [ ] Task 24: 實作 DailyGoldRewardRepositoryImpl
+- [ ] Task 25: DailyGoldRewardRepositoryImplTest  (Mockito.mock) - shouldCheckClaimedTodaySuccessfully
+- [ ] Task 26: DailyGoldRewardRepositoryImplTest  (Mockito.mock) - shouldCreateRewardSuccessfully
+- [ ] Task 27: DailyGoldRewardRepositoryImplTest  (Mockito.mock) - shouldHandleMapperException
 
 ### Service 層
 
-- [ ] Task 24: 實作 DailyGoldRewardService
+- [ ] Task 28: 實作 DailyGoldRewardService
 
 #### DailyGoldRewardServiceTest (Mockito.mock)
 
-- [ ] Task 25: DailyGoldRewardServiceTest - shouldClaimDailyGoldenWhenUserExistsAndNotClaimedToday
-- [ ] Task 26: DailyGoldRewardServiceTest - shouldThrowExceptionWhenUserNotExists
-- [ ] Task 27: DailyGoldRewardServiceTest - shouldThrowExceptionWhenAlreadyClaimedToday
-- [ ] Task 28: DailyGoldRewardServiceTest - shouldThrowExceptionWhenWalletNotExists
-- [ ] Task 29: DailyGoldRewardServiceTest - shouldCalculateUTCDateCorrectly
+- [ ] Task 29: DailyGoldRewardServiceTest - shouldClaimDailyGoldenWhenUserExistsAndNotClaimedToday
+- [ ] Task 30: DailyGoldRewardServiceTest - shouldThrowExceptionWhenUserNotExists
+- [ ] Task 31: DailyGoldRewardServiceTest - shouldThrowExceptionWhenAlreadyClaimedToday
+- [ ] Task 32: DailyGoldRewardServiceTest - shouldThrowExceptionWhenWalletNotExists
+- [ ] Task 33: DailyGoldRewardServiceTest - shouldCalculateUTCDateCorrectly
 
 ### Controller 層
 
-- [ ] Task 30: 建立 DailyGoldRewardController
+- [ ] Task 34: 建立 DailyGoldRewardController
 
 #### DailyGoldRewardControllerTest (使用 @SpringBootTest)
 
-- [ ] Task 31: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
-- [ ] Task 32: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
-- [ ] Task 33: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
-- [ ] Task 34: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
-- [ ] Task 35: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
-- [ ] Task 36: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
+- [ ] Task 35: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
+- [ ] Task 36: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
+- [ ] Task 37: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
+- [ ] Task 38: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
+- [ ] Task 39: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
+- [ ] Task 40: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
 
 ### 文件
 
-- [x] Task 37: 建立 task.md 檔案記錄所有測試案例和任務
+- [x] Task 41: 建立 task.md 檔案記錄所有測試案例和任務
 
 ## 測試策略
 
