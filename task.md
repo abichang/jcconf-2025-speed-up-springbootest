@@ -56,7 +56,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - [x] Task 14: 建立 UserRepository interface
 - [ ] Task 15: 實作 UserRepositoryImpl
 - [ ] Task 16: UserRepositoryImplTest  (Mockito.mock) - shouldGetUserByIdSuccessfully
-- [ ] Task 17: UserRepositoryImplTest  (Mockito.mock) - shouldReturnNullWhenUserNotExists
+- [ ] Task 17: UserRepositoryImplTest  (Mockito.mock) - shouldThrowExceptionWhenUserNotExists
 - [ ] Task 18: 建立 WalletRepository interface
 - [ ] Task 19: 實作 WalletRepositoryImpl
 - [ ] Task 20: WalletRepositoryImplTest  (Mockito.mock) - shouldGetWalletByUserIdSuccessfully
