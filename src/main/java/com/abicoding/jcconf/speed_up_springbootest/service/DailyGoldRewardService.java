@@ -33,16 +33,17 @@ public class DailyGoldRewardService {
     public void claim(Long userId) {
 
         Instant now = timeUtils.now();
-        RewardDate rewardDate = RewardDate.create(now);
         User user = userRepository.getById(userId);
+        RewardDate rewardDate = RewardDate.create(now);
+
         if (dailyGoldRewardRepository.hasClaimed(user, rewardDate)) {
-            throw new DailyGoldenClaimedException("userId=%s".formatted(userId));
+            throw new DailyGoldenClaimedException("userId=%s".formatted(user.getId()));
         }
 
-        walletRepository.addGold(userId, DAILY_GOLD_AMOUNT, now);
+        walletRepository.addGold(user.getId(), DAILY_GOLD_AMOUNT, now);
 
         DailyGoldReward reward = new DailyGoldReward();
-        reward.setUserId(userId);
+        reward.setUserId(user.getId());
         reward.setRewardDate(rewardDate);
         reward.setAmount(DAILY_GOLD_AMOUNT);
         reward.setCreatedAt(now);
