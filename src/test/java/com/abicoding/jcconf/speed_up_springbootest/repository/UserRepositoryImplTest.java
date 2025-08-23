@@ -4,14 +4,16 @@ import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.UserDbDto;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.UserMapper;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.UserRepositoryImpl;
 import com.abicoding.jcconf.speed_up_springbootest.entity.User;
+import com.abicoding.jcconf.speed_up_springbootest.service.UserNotFoundException;
 import com.abicoding.jcconf.speed_up_springbootest.service.UserRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class UserRepositoryImplTest {
 
@@ -31,17 +33,26 @@ class UserRepositoryImplTest {
     }
 
     private UserDbDto given_user_in_db() {
-        UserDbDto userDbDto = given_UserDbDto();
-        when(userMapper.selectById(userDbDto.getId())).thenReturn(userDbDto);
-        return userDbDto;
+        UserDbDto user = new UserDbDto();
+        user.setId(1L);
+        user.setUsername("testuser");
+        user.setCreatedAt(1640995200000L);
+        user.setUpdatedAt(1640995200000L);
+        Mockito.doReturn(user).when(userMapper).selectById(user.getId());
+        return user;
     }
 
-    private UserDbDto given_UserDbDto() {
-        UserDbDto userDbDto = new UserDbDto();
-        userDbDto.setId(1L);
-        userDbDto.setUsername("testuser");
-        userDbDto.setCreatedAt(1640995200000L);
-        userDbDto.setUpdatedAt(1640995200000L);
-        return userDbDto;
+    @Test
+    void getById_user_not_existed() {
+        Long notFoundUserId = 404L;
+
+        Mockito.doReturn(null)
+                .when(userMapper)
+                .selectById(notFoundUserId);
+
+        assertThatThrownBy(() -> userRepository.getById(notFoundUserId))
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessage("userId=" + notFoundUserId);
     }
+
 }
