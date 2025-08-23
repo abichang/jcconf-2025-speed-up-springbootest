@@ -29,25 +29,24 @@ class DailyGoldRewardServiceTest {
 
     @Test
     void claim_all_ok() {
-        Long userId = 1L;
         Instant now = given_now("2024-01-15T10:00:00Z");
 
         RewardDate rewardDate = RewardDate.restore(20240115);
         User user = new User();
-        user.setId(userId);
+        user.setId(1L);
 
-        doReturn(user).when(userRepository).getById(userId);
+        doReturn(user).when(userRepository).getById(user.getId());
         doReturn(false).when(dailyGoldRewardRepository).hasClaimed(user, rewardDate);
 
-        dailyGoldRewardService.claim(userId);
+        dailyGoldRewardService.claim(user.getId());
 
-        verify(walletRepository).addGold(userId, 10L, now);
+        verify(walletRepository).addGold(user.getId(), 10L, now);
 
         ArgumentCaptor<DailyGoldReward> rewardCaptor = ArgumentCaptor.forClass(DailyGoldReward.class);
         verify(dailyGoldRewardRepository).claim(rewardCaptor.capture());
 
         DailyGoldReward capturedReward = rewardCaptor.getValue();
-        assertEquals(userId, capturedReward.getUserId());
+        assertEquals(user.getId(), capturedReward.getUserId());
         assertEquals(10L, capturedReward.getAmount());
         assertEquals(now, capturedReward.getCreatedAt());
         assertEquals(RewardDate.restore(20240115), capturedReward.getRewardDate());
@@ -61,19 +60,18 @@ class DailyGoldRewardServiceTest {
 
     @Test
     void duplicate_claim() {
-        Long userId = 1L;
         given_now("2024-01-15T10:00:00Z");
 
         RewardDate rewardDate = RewardDate.restore(20240115);
         User user = new User();
-        user.setId(userId);
+        user.setId(1L);
 
-        doReturn(user).when(userRepository).getById(userId);
+        doReturn(user).when(userRepository).getById(user.getId());
         doReturn(true).when(dailyGoldRewardRepository).hasClaimed(user, rewardDate);
 
         DailyGoldenClaimedException exception = assertThrows(
                 DailyGoldenClaimedException.class,
-                () -> dailyGoldRewardService.claim(userId)
+                () -> dailyGoldRewardService.claim(user.getId())
         );
 
         assertEquals("userId=1", exception.getMessage());
