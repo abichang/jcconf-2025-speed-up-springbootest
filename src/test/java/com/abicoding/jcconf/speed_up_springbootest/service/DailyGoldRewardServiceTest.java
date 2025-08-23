@@ -16,23 +16,26 @@ class DailyGoldRewardServiceTest {
     private final UserRepository userRepository = Mockito.mock(UserRepository.class);
     private final WalletRepository walletRepository = Mockito.mock(WalletRepository.class);
     private final DailyGoldRewardRepository dailyGoldRewardRepository = Mockito.mock(DailyGoldRewardRepository.class);
+    private final TimeUtils timeUtils = Mockito.mock(TimeUtils.class);
     private final DailyGoldRewardService dailyGoldRewardService = new DailyGoldRewardService(
             userRepository,
             walletRepository,
-            dailyGoldRewardRepository
+            dailyGoldRewardRepository,
+            timeUtils
     );
 
 
     @Test
     void claim_all_ok() {
         Long userId = 1L;
-        Instant now = Instant.now();
+        Instant now = Instant.parse("2024-01-15T10:00:00Z");
 
-        when(dailyGoldRewardRepository.hasClaimed(eq(userId), any(Instant.class))).thenReturn(false);
+        when(timeUtils.now()).thenReturn(now);
+        when(dailyGoldRewardRepository.hasClaimed(userId, now)).thenReturn(false);
 
         dailyGoldRewardService.claim(userId);
 
-        verify(walletRepository).addGold(eq(userId), eq(10L), any(Instant.class));
+        verify(walletRepository).addGold(userId, 10L, now);
 
         ArgumentCaptor<DailyGoldReward> rewardCaptor = ArgumentCaptor.forClass(DailyGoldReward.class);
         verify(dailyGoldRewardRepository).claim(rewardCaptor.capture());
@@ -40,15 +43,17 @@ class DailyGoldRewardServiceTest {
         DailyGoldReward capturedReward = rewardCaptor.getValue();
         assertEquals(userId, capturedReward.getUserId());
         assertEquals(10L, capturedReward.getAmount());
-        assertNotNull(capturedReward.getCreatedAt());
-        assertEquals(TimeUtils.toYYYYMMDD(capturedReward.getCreatedAt()), capturedReward.getRewardDate());
+        assertEquals(now, capturedReward.getCreatedAt());
+        assertEquals(TimeUtils.toYYYYMMDD(now), capturedReward.getRewardDate());
     }
 
     @Test
     void duplicate_claim() {
         Long userId = 1L;
+        Instant now = Instant.parse("2024-01-15T10:00:00Z");
 
-        when(dailyGoldRewardRepository.hasClaimed(eq(userId), any(Instant.class))).thenReturn(true);
+        when(timeUtils.now()).thenReturn(now);
+        when(dailyGoldRewardRepository.hasClaimed(userId, now)).thenReturn(true);
 
         DailyGoldenClaimedException exception = assertThrows(
                 DailyGoldenClaimedException.class,

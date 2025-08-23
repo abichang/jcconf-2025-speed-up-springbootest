@@ -15,19 +15,22 @@ public class DailyGoldRewardService {
     private final UserRepository userRepository;
     private final WalletRepository walletRepository;
     private final DailyGoldRewardRepository dailyGoldRewardRepository;
+    private final TimeUtils timeUtils;
 
     public DailyGoldRewardService(UserRepository userRepository,
                                   WalletRepository walletRepository,
-                                  DailyGoldRewardRepository dailyGoldRewardRepository) {
+                                  DailyGoldRewardRepository dailyGoldRewardRepository,
+                                  TimeUtils timeUtils) {
         this.userRepository = userRepository;
         this.walletRepository = walletRepository;
         this.dailyGoldRewardRepository = dailyGoldRewardRepository;
+        this.timeUtils = timeUtils;
     }
 
     @Transactional
     public void claim(Long userId) {
 
-        Instant now = Instant.now();
+        Instant now = timeUtils.now();
         if (dailyGoldRewardRepository.hasClaimed(userId, now)) {
             throw new DailyGoldenClaimedException("userId=%s".formatted(userId));
         }
