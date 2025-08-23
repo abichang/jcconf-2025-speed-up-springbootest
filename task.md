@@ -55,18 +55,18 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 - [x] Task 14: 建立 UserRepository interface
 - [x] Task 15: 實作 UserRepositoryImpl
-- [ ] Task 16: UserRepositoryImplTest  (Mockito.mock) - shouldGetUserByIdSuccessfully
-- [ ] Task 17: UserRepositoryImplTest  (Mockito.mock) - shouldThrowExceptionWhenUserNotExists
+- [ ] Task 16: UserRepositoryImplTest  (Mockito.mock) - getById_all_ok
+- [ ] Task 17: UserRepositoryImplTest  (Mockito.mock) - getById_user_not_existed
 - [ ] Task 18: 建立 WalletRepository interface
 - [ ] Task 19: 實作 WalletRepositoryImpl
-- [ ] Task 20: WalletRepositoryImplTest  (Mockito.mock) - shouldGetWalletByUserIdSuccessfully
-- [ ] Task 21: WalletRepositoryImplTest  (Mockito.mock) - shouldUpdateGoldSuccessfully
-- [ ] Task 22: WalletRepositoryImplTest  (Mockito.mock) - shouldReturnNullWhenWalletNotExists
+- [ ] Task 20: WalletRepositoryImplTest  (Mockito.mock) - getByUserId_all_ok
+- [ ] Task 21: WalletRepositoryImplTest  (Mockito.mock) - addGold_all_ok
+- [ ] Task 22: WalletRepositoryImplTest  (Mockito.mock) - getByUserId_wallet_not_existed
 - [ ] Task 23: 建立 DailyGoldRewardRepository interface
 - [ ] Task 24: 實作 DailyGoldRewardRepositoryImpl
-- [ ] Task 25: DailyGoldRewardRepositoryImplTest  (Mockito.mock) - shouldCheckClaimedTodaySuccessfully
-- [ ] Task 26: DailyGoldRewardRepositoryImplTest  (Mockito.mock) - shouldCreateRewardSuccessfully
-- [ ] Task 27: DailyGoldRewardRepositoryImplTest  (Mockito.mock) - shouldHandleMapperException
+- [ ] Task 25: DailyGoldRewardRepositoryImplTest  (Mockito.mock) - hasClaimedToday_all_ok
+- [ ] Task 26: DailyGoldRewardRepositoryImplTest  (Mockito.mock) - createReward_all_ok
+- [ ] Task 27: DailyGoldRewardRepositoryImplTest  (Mockito.mock) - mapper_exception_handling
 
 ### Service 層
 
