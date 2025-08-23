@@ -4,6 +4,7 @@ import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.DailyGoldRewar
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.DailyGoldRewardMapper;
 import com.abicoding.jcconf.speed_up_springbootest.entity.DailyGoldReward;
 import com.abicoding.jcconf.speed_up_springbootest.entity.RewardDate;
+import com.abicoding.jcconf.speed_up_springbootest.entity.User;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +20,8 @@ public class DailyGoldRewardRepositoryImpl implements DailyGoldRewardRepository 
     }
 
     @Override
-    public boolean hasClaimed(Long userId, RewardDate rewardDate) {
-        int count = dailyGoldRewardMapper.countByUserAndDate(userId, rewardDate.getValue());
+    public boolean hasClaimed(User user, RewardDate rewardDate) {
+        int count = dailyGoldRewardMapper.countByUserAndDate(user.getId(), rewardDate.getValue());
         return count > 0;
     }
 

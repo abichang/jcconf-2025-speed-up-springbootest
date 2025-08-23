@@ -5,6 +5,7 @@ import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.DailyGoldRewar
 import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.DailyGoldRewardRepositoryImpl;
 import com.abicoding.jcconf.speed_up_springbootest.entity.DailyGoldReward;
 import com.abicoding.jcconf.speed_up_springbootest.entity.RewardDate;
+import com.abicoding.jcconf.speed_up_springbootest.entity.User;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -26,34 +27,44 @@ class DailyGoldRewardRepositoryImplTest {
 
     @Test
     void claimed() {
-        Instant date = Instant.parse("2024-01-15T10:00:00Z");
 
         given_claimed(userId, 20240115);
 
-        RewardDate rewardDate = RewardDate.restore(20240115);
-        boolean hasClaimed = dailyGoldRewardRepository.hasClaimed(userId, rewardDate);
+        boolean hasClaimed = dailyGoldRewardRepository.hasClaimed(
+                user(userId),
+                RewardDate.restore(20240115));
 
         assertThat(hasClaimed).isTrue();
     }
 
     private void given_claimed(Long userId, int rewardDate) {
-        Mockito.doReturn(1).when(dailyGoldRewardMapper).countByUserAndDate(userId, rewardDate);
+        Mockito.doReturn(1)
+                .when(dailyGoldRewardMapper)
+                .countByUserAndDate(userId, rewardDate);
+    }
+
+    private User user(Long userId) {
+        User user = new User();
+        user.setId(userId);
+        return user;
     }
 
     @Test
     void not_claimed() {
-        Instant date = Instant.parse("2024-01-15T10:00:00Z");
 
         given_not_claimed(userId, 20240115);
 
-        RewardDate rewardDate = RewardDate.restore(20240115);
-        boolean hasClaimed = dailyGoldRewardRepository.hasClaimed(userId, rewardDate);
+        boolean hasClaimed = dailyGoldRewardRepository.hasClaimed(
+                user(userId),
+                RewardDate.restore(20240115));
 
         assertThat(hasClaimed).isFalse();
     }
 
     private void given_not_claimed(Long userId, int rewardDate) {
-        Mockito.doReturn(0).when(dailyGoldRewardMapper).countByUserAndDate(userId, rewardDate);
+        Mockito.doReturn(0)
+                .when(dailyGoldRewardMapper)
+                .countByUserAndDate(userId, rewardDate);
     }
 
     @Test

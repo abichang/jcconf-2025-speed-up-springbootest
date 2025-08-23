@@ -2,6 +2,7 @@ package com.abicoding.jcconf.speed_up_springbootest.service;
 
 import com.abicoding.jcconf.speed_up_springbootest.entity.DailyGoldReward;
 import com.abicoding.jcconf.speed_up_springbootest.entity.RewardDate;
+import com.abicoding.jcconf.speed_up_springbootest.entity.User;
 import com.abicoding.jcconf.speed_up_springbootest.util.TimeUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,8 @@ public class DailyGoldRewardService {
 
         Instant now = timeUtils.now();
         RewardDate rewardDate = RewardDate.create(now);
-        if (dailyGoldRewardRepository.hasClaimed(userId, rewardDate)) {
+        User user = userRepository.getById(userId);
+        if (dailyGoldRewardRepository.hasClaimed(user, rewardDate)) {
             throw new DailyGoldenClaimedException("userId=%s".formatted(userId));
         }
 

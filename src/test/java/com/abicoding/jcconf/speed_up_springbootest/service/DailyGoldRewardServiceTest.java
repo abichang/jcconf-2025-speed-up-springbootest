@@ -2,6 +2,7 @@ package com.abicoding.jcconf.speed_up_springbootest.service;
 
 import com.abicoding.jcconf.speed_up_springbootest.entity.DailyGoldReward;
 import com.abicoding.jcconf.speed_up_springbootest.entity.RewardDate;
+import com.abicoding.jcconf.speed_up_springbootest.entity.User;
 import com.abicoding.jcconf.speed_up_springbootest.util.TimeUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -32,8 +33,12 @@ class DailyGoldRewardServiceTest {
         Instant now = Instant.parse("2024-01-15T10:00:00Z");
 
         RewardDate rewardDate = RewardDate.restore(20240115);
+        User user = new User();
+        user.setId(userId);
+        
         when(timeUtils.now()).thenReturn(now);
-        when(dailyGoldRewardRepository.hasClaimed(userId, rewardDate)).thenReturn(false);
+        when(userRepository.getById(userId)).thenReturn(user);
+        when(dailyGoldRewardRepository.hasClaimed(user, rewardDate)).thenReturn(false);
 
         dailyGoldRewardService.claim(userId);
 
@@ -55,8 +60,12 @@ class DailyGoldRewardServiceTest {
         Instant now = Instant.parse("2024-01-15T10:00:00Z");
 
         RewardDate rewardDate = RewardDate.restore(20240115);
+        User user = new User();
+        user.setId(userId);
+        
         when(timeUtils.now()).thenReturn(now);
-        when(dailyGoldRewardRepository.hasClaimed(userId, rewardDate)).thenReturn(true);
+        when(userRepository.getById(userId)).thenReturn(user);
+        when(dailyGoldRewardRepository.hasClaimed(user, rewardDate)).thenReturn(true);
 
         DailyGoldenClaimedException exception = assertThrows(
                 DailyGoldenClaimedException.class,
