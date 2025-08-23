@@ -1,8 +1,7 @@
-package com.abicoding.jcconf.speed_up_springbootest.repository;
+package com.abicoding.jcconf.speed_up_springbootest.adapter.repository;
 
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.WalletDbDto;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.WalletMapper;
-import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.WalletRepositoryImpl;
 import com.abicoding.jcconf.speed_up_springbootest.entity.Wallet;
 import com.abicoding.jcconf.speed_up_springbootest.service.WalletNotFoundException;
 import com.abicoding.jcconf.speed_up_springbootest.service.WalletRepository;
