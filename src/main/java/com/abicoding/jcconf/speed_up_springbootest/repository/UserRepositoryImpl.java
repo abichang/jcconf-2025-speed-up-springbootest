@@ -1,7 +1,7 @@
 package com.abicoding.jcconf.speed_up_springbootest.repository;
 
-import com.abicoding.jcconf.speed_up_springbootest.dto.UserDbDto;
 import com.abicoding.jcconf.speed_up_springbootest.entity.User;
+import com.abicoding.jcconf.speed_up_springbootest.mapper.UserDbDto;
 import com.abicoding.jcconf.speed_up_springbootest.mapper.UserMapper;
 import org.springframework.stereotype.Repository;
 
