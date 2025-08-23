@@ -3,6 +3,7 @@ package com.abicoding.jcconf.speed_up_springbootest.adapter.repository;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.UserDbDto;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.UserMapper;
 import com.abicoding.jcconf.speed_up_springbootest.entity.User;
+import com.abicoding.jcconf.speed_up_springbootest.service.UserNotFoundException;
 import com.abicoding.jcconf.speed_up_springbootest.service.UserRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,7 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User getById(Long userId) {
         UserDbDto userDbDto = userMapper.selectById(userId);
         if (userDbDto == null) {
-            return null;
+            throw new UserNotFoundException("userId=%s".formatted(userId));
         }
         return convertToEntity(userDbDto);
     }
