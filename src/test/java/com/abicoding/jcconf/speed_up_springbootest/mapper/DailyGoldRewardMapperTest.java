@@ -5,10 +5,12 @@ import com.abicoding.jcconf.speed_up_springbootest.dto.UserDbDto;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @MybatisTest
 class DailyGoldRewardMapperTest {
@@ -57,5 +59,16 @@ class DailyGoldRewardMapperTest {
         int count = dailyGoldRewardMapper.countByUserAndDate(user.getId(), nonExistentDate);
 
         assertThat(count).isZero();
+    }
+
+    @Test
+    void duplicate_date() {
+        UserDbDto user = given_user();
+
+        DailyGoldRewardDbDto reward = given_DailyGoldRewardDbDto(user);
+        dailyGoldRewardMapper.insert(reward);
+
+        assertThatThrownBy(() -> dailyGoldRewardMapper.insert(reward))
+                .isInstanceOf(DuplicateKeyException.class);
     }
 }
