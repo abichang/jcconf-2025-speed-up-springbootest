@@ -48,4 +48,14 @@ class DailyGoldRewardMapperTest {
         reward.setCreatedAt(Instant.now().toEpochMilli());
         return reward;
     }
+
+    @Test
+    void countByUserAndDate_not_exists() {
+        UserDbDto user = given_user();
+
+        Integer nonExistentDate = 20240116;
+        int count = dailyGoldRewardMapper.countByUserAndDate(user.getId(), nonExistentDate);
+
+        assertThat(count).isZero();
+    }
 }

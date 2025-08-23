@@ -44,7 +44,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 #### DailyGoldRewardMapperTest (使用 @MybatisTest 和 H2)
 
 - [x] Task 10: DailyGoldRewardMapperTest - insert_and_countByUserAndDate
-- [ ] Task 11: DailyGoldRewardMapperTest - countByUserAndDate_not_exists
+- [x] Task 11: DailyGoldRewardMapperTest - countByUserAndDate_not_exists
 - [ ] Task 12: DailyGoldRewardMapperTest - insert_reward_unique_constraint_violation
 
 ### 實體層
