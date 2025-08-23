@@ -10,7 +10,8 @@ import org.mockito.Mockito;
 
 import java.time.Instant;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class DailyGoldRewardServiceTest {
@@ -26,7 +27,6 @@ class DailyGoldRewardServiceTest {
             timeUtils
     );
 
-
     @Test
     void claim_all_ok() {
         Long userId = 1L;
@@ -35,10 +35,10 @@ class DailyGoldRewardServiceTest {
         RewardDate rewardDate = RewardDate.restore(20240115);
         User user = new User();
         user.setId(userId);
-        
-        when(timeUtils.now()).thenReturn(now);
-        when(userRepository.getById(userId)).thenReturn(user);
-        when(dailyGoldRewardRepository.hasClaimed(user, rewardDate)).thenReturn(false);
+
+        doReturn(now).when(timeUtils).now();
+        doReturn(user).when(userRepository).getById(userId);
+        doReturn(false).when(dailyGoldRewardRepository).hasClaimed(user, rewardDate);
 
         dailyGoldRewardService.claim(userId);
 
@@ -62,10 +62,10 @@ class DailyGoldRewardServiceTest {
         RewardDate rewardDate = RewardDate.restore(20240115);
         User user = new User();
         user.setId(userId);
-        
-        when(timeUtils.now()).thenReturn(now);
-        when(userRepository.getById(userId)).thenReturn(user);
-        when(dailyGoldRewardRepository.hasClaimed(user, rewardDate)).thenReturn(true);
+
+        doReturn(now).when(timeUtils).now();
+        doReturn(user).when(userRepository).getById(userId);
+        doReturn(true).when(dailyGoldRewardRepository).hasClaimed(user, rewardDate);
 
         DailyGoldenClaimedException exception = assertThrows(
                 DailyGoldenClaimedException.class,
