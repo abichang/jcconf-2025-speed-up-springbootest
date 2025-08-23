@@ -30,13 +30,12 @@ class DailyGoldRewardServiceTest {
     @Test
     void claim_all_ok() {
         Long userId = 1L;
-        Instant now = Instant.parse("2024-01-15T10:00:00Z");
+        Instant now = given_now("2024-01-15T10:00:00Z");
 
         RewardDate rewardDate = RewardDate.restore(20240115);
         User user = new User();
         user.setId(userId);
 
-        doReturn(now).when(timeUtils).now();
         doReturn(user).when(userRepository).getById(userId);
         doReturn(false).when(dailyGoldRewardRepository).hasClaimed(user, rewardDate);
 
@@ -54,16 +53,21 @@ class DailyGoldRewardServiceTest {
         assertEquals(RewardDate.restore(20240115), capturedReward.getRewardDate());
     }
 
+    private Instant given_now(String timeText) {
+        Instant now = Instant.parse(timeText);
+        doReturn(now).when(timeUtils).now();
+        return now;
+    }
+
     @Test
     void duplicate_claim() {
         Long userId = 1L;
-        Instant now = Instant.parse("2024-01-15T10:00:00Z");
+        given_now("2024-01-15T10:00:00Z");
 
         RewardDate rewardDate = RewardDate.restore(20240115);
         User user = new User();
         user.setId(userId);
 
-        doReturn(now).when(timeUtils).now();
         doReturn(user).when(userRepository).getById(userId);
         doReturn(true).when(dailyGoldRewardRepository).hasClaimed(user, rewardDate);
 
