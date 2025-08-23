@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -79,13 +78,12 @@ class DailyGoldRewardServiceTest {
 
         given_already_claimed(user, rewardDate);
 
-        DailyGoldenClaimedException exception = assertThrows(
+        DailyGoldenClaimedException actualException = assertThrows(
                 DailyGoldenClaimedException.class,
                 () -> dailyGoldRewardService.claim(user.getId())
         );
 
-        assertEquals("userId=1", exception.getMessage());
-
+        assertThat(actualException.getMessage()).isEqualTo("userId=" + user.getId());
         verify(walletRepository, never()).addGold(anyLong(), anyLong(), any(Instant.class));
         verify(dailyGoldRewardRepository, never()).claim(any(DailyGoldReward.class));
     }
