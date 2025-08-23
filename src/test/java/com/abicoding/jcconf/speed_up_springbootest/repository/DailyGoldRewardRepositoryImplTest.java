@@ -30,7 +30,7 @@ class DailyGoldRewardRepositoryImplTest {
 
         given_claimed(userId, 20240115);
 
-        RewardDate rewardDate = RewardDate.create(date);
+        RewardDate rewardDate = RewardDate.restore(20240115);
         boolean hasClaimed = dailyGoldRewardRepository.hasClaimed(userId, rewardDate);
 
         assertThat(hasClaimed).isTrue();
@@ -46,7 +46,7 @@ class DailyGoldRewardRepositoryImplTest {
 
         given_not_claimed(userId, 20240115);
 
-        RewardDate rewardDate = RewardDate.create(date);
+        RewardDate rewardDate = RewardDate.restore(20240115);
         boolean hasClaimed = dailyGoldRewardRepository.hasClaimed(userId, rewardDate);
 
         assertThat(hasClaimed).isFalse();
@@ -69,7 +69,7 @@ class DailyGoldRewardRepositoryImplTest {
         DailyGoldReward reward = new DailyGoldReward();
         reward.setId(1L);
         reward.setUserId(1L);
-        reward.setRewardDate(RewardDate.create(Instant.parse("2024-01-15T10:00:00Z")));
+        reward.setRewardDate(RewardDate.restore(20240115));
         reward.setAmount(10L);
         reward.setCreatedAt(Instant.now());
         return reward;

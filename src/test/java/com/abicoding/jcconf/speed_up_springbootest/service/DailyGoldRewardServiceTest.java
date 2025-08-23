@@ -31,7 +31,7 @@ class DailyGoldRewardServiceTest {
         Long userId = 1L;
         Instant now = Instant.parse("2024-01-15T10:00:00Z");
 
-        RewardDate rewardDate = RewardDate.create(now);
+        RewardDate rewardDate = RewardDate.restore(20240115);
         when(timeUtils.now()).thenReturn(now);
         when(dailyGoldRewardRepository.hasClaimed(userId, rewardDate)).thenReturn(false);
 
@@ -46,7 +46,7 @@ class DailyGoldRewardServiceTest {
         assertEquals(userId, capturedReward.getUserId());
         assertEquals(10L, capturedReward.getAmount());
         assertEquals(now, capturedReward.getCreatedAt());
-        assertEquals(RewardDate.create(now), capturedReward.getRewardDate());
+        assertEquals(RewardDate.restore(20240115), capturedReward.getRewardDate());
     }
 
     @Test
@@ -54,7 +54,7 @@ class DailyGoldRewardServiceTest {
         Long userId = 1L;
         Instant now = Instant.parse("2024-01-15T10:00:00Z");
 
-        RewardDate rewardDate = RewardDate.create(now);
+        RewardDate rewardDate = RewardDate.restore(20240115);
         when(timeUtils.now()).thenReturn(now);
         when(dailyGoldRewardRepository.hasClaimed(userId, rewardDate)).thenReturn(true);
 
