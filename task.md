@@ -97,7 +97,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 ## 測試策略
 
-- **Controller**: @SpringBootTest + Real Database
+- **Controller**: @SpringBootTest + MockMvc + Service @MockBean
 - **Service**: Mockito.mock() + Mock Repository
 - **Repository**: Mockito.mock() + Mock Mapper (UserRepository, WalletRepository, DailyGoldRewardRepository)
 - **Mapper**: @MybatisTest + Real H2 Database
