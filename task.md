@@ -78,27 +78,32 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - [x] Task 30: DailyGoldRewardServiceTest - duplicate_claim
 - [x] Task 31: DailyGoldRewardServiceTest - handle_user_not_found
 
+#### DailyGoldRewardServiceTransactionalTest (@SpringBootTest)
+
+- [ ] Task 32: DailyGoldRewardServiceTransactionalTest - claim_fail_wallet_rollback
+
 ### Controller 層
 
-- [ ] Task 32: 建立 DailyGoldRewardController
+- [ ] Task 33: 建立 DailyGoldRewardController
 
 #### DailyGoldRewardControllerTest (使用 @SpringBootTest)
 
-- [ ] Task 33: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
-- [ ] Task 34: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
-- [ ] Task 35: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
-- [ ] Task 36: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
-- [ ] Task 37: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
-- [ ] Task 38: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
+- [ ] Task 34: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
+- [ ] Task 35: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
+- [ ] Task 36: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
+- [ ] Task 37: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
+- [ ] Task 38: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
+- [ ] Task 39: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
 
 ### 文件
 
-- [x] Task 39: 建立 task.md 檔案記錄所有測試案例和任務
+- [x] Task 40: 建立 task.md 檔案記錄所有測試案例和任務
 
 ## 測試策略
 
 - **Controller**: @SpringBootTest + MockMvc + Service @MockBean
 - **Service**: Mockito.mock() + Mock Repository
+- **Service Transactional**: @SpringBootTest + Real WalletRepository + Mock Other Dependencies (驗證事務回滾)
 - **Repository**: Mockito.mock() + Mock Mapper (UserRepository, WalletRepository, DailyGoldRewardRepository)
 - **Mapper**: @MybatisTest + Real H2 Database
 
@@ -182,7 +187,22 @@ When: service.claim(999L)
 Then: 拋出UserNotFoundException("userId=999")
 ```
 
-### 3. Repository 測試 (Mockito.mock)
+### 3. DailyGoldRewardServiceTransactionalTest (@SpringBootTest)
+
+#### claim_fail_wallet_rollback
+
+```
+Given: 資料庫有用戶ID=1，錢包有500金幣，
+       walletRepository為真實實作（操作真實資料庫），
+       userRepository.getById()正常回傳User物件，
+       dailyGoldRewardRepository.hasClaimed()回傳false，
+       dailyGoldRewardRepository.claim()拋出RuntimeException
+When: service.claim(1L)
+Then: 拋出RuntimeException，
+      錢包金幣數回滾為原始值500（驗證@Transactional生效）
+```
+
+### 4. Repository 測試 (Mockito.mock)
 
 #### UserRepositoryImplTest
 
@@ -254,7 +274,7 @@ When: repository相關方法被呼叫
 Then: 拋出RepositoryException
 ```
 
-### 4. Mapper 測試 (@MybatisTest + Real H2)
+### 5. Mapper 測試 (@MybatisTest + Real H2)
 
 #### UserMapperTest
 
