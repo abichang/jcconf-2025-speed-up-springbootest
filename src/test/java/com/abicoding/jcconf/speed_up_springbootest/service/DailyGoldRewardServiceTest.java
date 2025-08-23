@@ -31,12 +31,10 @@ class DailyGoldRewardServiceTest {
     void claim_all_ok() {
         Instant now = given_now("2024-01-15T10:00:00Z");
 
+        User user = given_user();
         RewardDate rewardDate = RewardDate.restore(20240115);
-        User user = new User();
-        user.setId(1L);
 
-        doReturn(user).when(userRepository).getById(user.getId());
-        doReturn(false).when(dailyGoldRewardRepository).hasClaimed(user, rewardDate);
+        given_not_claim_yet(user, rewardDate);
 
         dailyGoldRewardService.claim(user.getId());
 
@@ -58,16 +56,27 @@ class DailyGoldRewardServiceTest {
         return now;
     }
 
+    private User given_user() {
+        User user = new User();
+        user.setId(1L);
+        doReturn(user).when(userRepository).getById(user.getId());
+        return user;
+    }
+
+    private void given_not_claim_yet(User user, RewardDate rewardDate) {
+        doReturn(false)
+                .when(dailyGoldRewardRepository)
+                .hasClaimed(user, rewardDate);
+    }
+
     @Test
     void duplicate_claim() {
         given_now("2024-01-15T10:00:00Z");
 
+        User user = given_user();
         RewardDate rewardDate = RewardDate.restore(20240115);
-        User user = new User();
-        user.setId(1L);
 
-        doReturn(user).when(userRepository).getById(user.getId());
-        doReturn(true).when(dailyGoldRewardRepository).hasClaimed(user, rewardDate);
+        given_already_claimed(user, rewardDate);
 
         DailyGoldenClaimedException exception = assertThrows(
                 DailyGoldenClaimedException.class,
@@ -78,5 +87,11 @@ class DailyGoldRewardServiceTest {
 
         verify(walletRepository, never()).addGold(anyLong(), anyLong(), any(Instant.class));
         verify(dailyGoldRewardRepository, never()).claim(any(DailyGoldReward.class));
+    }
+
+    private void given_already_claimed(User user, RewardDate rewardDate) {
+        doReturn(true)
+                .when(dailyGoldRewardRepository)
+                .hasClaimed(user, rewardDate);
     }
 }
