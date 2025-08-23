@@ -2,6 +2,7 @@ package com.abicoding.jcconf.speed_up_springbootest.adapter.repository;
 
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.DailyGoldRewardDbDto;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.DailyGoldRewardMapper;
+import com.abicoding.jcconf.speed_up_springbootest.entity.DailyGoldReward;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardRepository;
 import org.springframework.stereotype.Repository;
 
@@ -26,12 +27,18 @@ public class DailyGoldRewardRepositoryImpl implements DailyGoldRewardRepository 
     }
 
     @Override
-    public void createReward(Long userId, Instant date, Long amount) {
-        DailyGoldRewardDbDto reward = new DailyGoldRewardDbDto();
-        reward.setUserId(userId);
-        reward.setRewardDate(Integer.valueOf(date.atZone(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("yyyyMMdd"))));
-        reward.setAmount(amount);
-        reward.setCreatedAt(Instant.now().toEpochMilli());
-        dailyGoldRewardMapper.insert(reward);
+    public void claim(DailyGoldReward reward) {
+        DailyGoldRewardDbDto dbDto = convertToDbDto(reward);
+        dailyGoldRewardMapper.insert(dbDto);
+    }
+
+    private DailyGoldRewardDbDto convertToDbDto(DailyGoldReward reward) {
+        DailyGoldRewardDbDto dbDto = new DailyGoldRewardDbDto();
+        dbDto.setId(reward.getId());
+        dbDto.setUserId(reward.getUserId());
+        dbDto.setRewardDate(reward.getRewardDate());
+        dbDto.setAmount(reward.getAmount());
+        dbDto.setCreatedAt(reward.getCreatedAt().toEpochMilli());
+        return dbDto;
     }
 }
