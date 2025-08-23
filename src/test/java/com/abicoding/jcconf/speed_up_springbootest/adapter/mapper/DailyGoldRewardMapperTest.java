@@ -1,9 +1,5 @@
-package com.abicoding.jcconf.speed_up_springbootest.mapper;
+package com.abicoding.jcconf.speed_up_springbootest.adapter.mapper;
 
-import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.DailyGoldRewardDbDto;
-import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.DailyGoldRewardMapper;
-import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.UserDbDto;
-import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
