@@ -1,0 +1,68 @@
+package com.abicoding.jcconf.speed_up_springbootest.repository;
+
+import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.WalletDbDto;
+import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.WalletMapper;
+import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.WalletRepositoryImpl;
+import com.abicoding.jcconf.speed_up_springbootest.entity.Wallet;
+import com.abicoding.jcconf.speed_up_springbootest.service.WalletNotFoundException;
+import com.abicoding.jcconf.speed_up_springbootest.service.WalletRepository;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.time.Instant;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
+
+class WalletRepositoryImplTest {
+
+    private final WalletMapper walletMapper = mock(WalletMapper.class);
+    private final WalletRepository walletRepository = new WalletRepositoryImpl(walletMapper);
+
+    @Test
+    void getByUserId_all_ok() {
+        WalletDbDto walletDbDto = given_wallet_in_db();
+
+        Wallet actualWallet = walletRepository.getByUserId(walletDbDto.getUserId());
+
+        assertThat(actualWallet.getUserId()).isEqualTo(walletDbDto.getUserId());
+        assertThat(actualWallet.getGold()).isEqualTo(walletDbDto.getGold());
+        assertThat(actualWallet.getCreatedAt()).isEqualTo(Instant.ofEpochMilli(walletDbDto.getCreatedAt()));
+        assertThat(actualWallet.getUpdatedAt()).isEqualTo(Instant.ofEpochMilli(walletDbDto.getUpdatedAt()));
+    }
+
+    private WalletDbDto given_wallet_in_db() {
+        WalletDbDto wallet = new WalletDbDto();
+        wallet.setUserId(1L);
+        wallet.setGold(500L);
+        wallet.setCreatedAt(1640995200000L);
+        wallet.setUpdatedAt(1640995200000L);
+        Mockito.doReturn(wallet).when(walletMapper).selectByUserId(wallet.getUserId());
+        return wallet;
+    }
+
+    @Test
+    void addGold_all_ok() {
+        Long userId = 1L;
+        Long amount = 50L;
+        Instant updatedAt = Instant.now();
+
+        walletRepository.addGold(userId, amount, updatedAt);
+
+        verify(walletMapper, times(1)).addGold(userId, amount, updatedAt.toEpochMilli());
+    }
+
+    @Test
+    void getByUserId_wallet_not_existed() {
+        Long userWithoutWallet = 404L;
+
+        Mockito.doReturn(null)
+                .when(walletMapper)
+                .selectByUserId(userWithoutWallet);
+
+        assertThatThrownBy(() -> walletRepository.getByUserId(userWithoutWallet))
+                .isInstanceOf(WalletNotFoundException.class)
+                .hasMessage("userId=" + userWithoutWallet);
+    }
+}
