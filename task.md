@@ -70,7 +70,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 ### Service 層
 
-- [ ] Task 28: 實作 DailyGoldRewardService
+- [x] Task 28: 實作 DailyGoldRewardService
 
 #### DailyGoldRewardServiceTest (Mockito.mock)
 
