@@ -74,28 +74,25 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 #### DailyGoldRewardServiceTest (Mockito.mock)
 
-- [ ] Task 29: DailyGoldRewardServiceTest - shouldClaimDailyGoldenWhenUserExistsAndNotClaimedToday
-- [ ] Task 30: DailyGoldRewardServiceTest - shouldThrowExceptionWhenUserNotExists
-- [ ] Task 31: DailyGoldRewardServiceTest - shouldThrowExceptionWhenAlreadyClaimedToday
-- [ ] Task 32: DailyGoldRewardServiceTest - shouldThrowExceptionWhenWalletNotExists
-- [ ] Task 33: DailyGoldRewardServiceTest - shouldCalculateUTCDateCorrectly
+- [ ] Task 29: DailyGoldRewardServiceTest - claim_all_ok
+- [ ] Task 30: DailyGoldRewardServiceTest - duplicate_claim
 
 ### Controller 層
 
-- [ ] Task 34: 建立 DailyGoldRewardController
+- [ ] Task 31: 建立 DailyGoldRewardController
 
 #### DailyGoldRewardControllerTest (使用 @SpringBootTest)
 
-- [ ] Task 35: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
-- [ ] Task 36: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
-- [ ] Task 37: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
-- [ ] Task 38: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
-- [ ] Task 39: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
-- [ ] Task 40: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
+- [ ] Task 32: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
+- [ ] Task 33: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
+- [ ] Task 34: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
+- [ ] Task 35: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
+- [ ] Task 36: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
+- [ ] Task 37: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
 
 ### 文件
 
-- [x] Task 41: 建立 task.md 檔案記錄所有測試案例和任務
+- [x] Task 38: 建立 task.md 檔案記錄所有測試案例和任務
 
 ## 測試策略
 
@@ -159,49 +156,21 @@ Then: 回傳400，錯誤訊息"Invalid user ID format"
 
 ### 2. DailyGoldRewardServiceTest (Mockito.mock)
 
-#### shouldClaimDailyGoldenWhenUserExistsAndNotClaimedToday
+#### claim_all_ok
 
 ```
-Given: userRepository.getUserById(1L)回傳User，
-       dailyGoldRewardRepository.hasClaimedToday(1L, today)回傳false，
-       walletRepository.getWalletByUserId(1L)回傳Wallet(gold=500)
-When: service.claimDailyGolden(1L)
-Then: 呼叫walletRepository.addGold(1L, 10)，
-      呼叫dailyGoldRewardRepository.createReward(1L, today, 10)，回傳成功結果
+Given: dailyGoldRewardRepository.hasClaimed(1L, now)回傳false
+When: service.claim(1L)
+Then: 呼叫walletRepository.addGold(1L, 10, now)，
+      呼叫dailyGoldRewardRepository.claim(reward)，執行成功
 ```
 
-#### shouldThrowExceptionWhenUserNotExists
+#### duplicate_claim
 
 ```
-Given: userRepository.getUserById(999L)回傳null
-When: service.claimDailyGolden(999L)
-Then: 拋出UserNotFoundException
-```
-
-#### shouldThrowExceptionWhenAlreadyClaimedToday
-
-```
-Given: userRepository.getUserById(1L)回傳User，
-       dailyGoldRewardRepository.hasClaimedToday(1L, today)回傳true
-When: service.claimDailyGolden(1L)
-Then: 拋出DailyGoldenAlreadyClaimedException
-```
-
-#### shouldThrowExceptionWhenWalletNotExists
-
-```
-Given: userRepository.getUserById(1L)回傳User，
-       walletRepository.getWalletByUserId(1L)回傳null
-When: service.claimDailyGolden(1L)
-Then: 拋出WalletNotFoundException（這是系統Bug，用戶存在必須有錢包）
-```
-
-#### shouldCalculateUTCDateCorrectly
-
-```
-Given: 當前時間為不同時區
-When: service.claimDailyGolden(1L)
-Then: 正確轉換為UTC日期進行判斷
+Given: dailyGoldRewardRepository.hasClaimed(1L, now)回傳true
+When: service.claim(1L)
+Then: 拋出DailyGoldenClaimedException("userId=1")
 ```
 
 ### 3. Repository 測試 (Mockito.mock)
