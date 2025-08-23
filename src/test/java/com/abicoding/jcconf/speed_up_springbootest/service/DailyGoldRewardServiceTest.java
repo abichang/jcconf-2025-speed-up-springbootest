@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 
 import java.time.Instant;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -43,11 +44,11 @@ class DailyGoldRewardServiceTest {
         ArgumentCaptor<DailyGoldReward> rewardCaptor = ArgumentCaptor.forClass(DailyGoldReward.class);
         verify(dailyGoldRewardRepository).claim(rewardCaptor.capture());
 
-        DailyGoldReward capturedReward = rewardCaptor.getValue();
-        assertEquals(user.getId(), capturedReward.getUserId());
-        assertEquals(10L, capturedReward.getAmount());
-        assertEquals(now, capturedReward.getCreatedAt());
-        assertEquals(RewardDate.restore(20240115), capturedReward.getRewardDate());
+        DailyGoldReward actualDailyGoldReward = rewardCaptor.getValue();
+        assertThat(actualDailyGoldReward.getUserId()).isEqualTo(user.getId());
+        assertThat(actualDailyGoldReward.getRewardDate()).isEqualTo(rewardDate);
+        assertThat(actualDailyGoldReward.getAmount()).isEqualTo(10L);
+        assertThat(actualDailyGoldReward.getCreatedAt()).isEqualTo(now);
     }
 
     private Instant given_now(String timeText) {
