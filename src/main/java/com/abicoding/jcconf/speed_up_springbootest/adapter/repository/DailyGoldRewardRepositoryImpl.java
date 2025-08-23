@@ -19,8 +19,7 @@ public class DailyGoldRewardRepositoryImpl implements DailyGoldRewardRepository 
     }
 
     @Override
-    public boolean hasClaimed(Long userId, Instant date) {
-        RewardDate rewardDate = RewardDate.create(date);
+    public boolean hasClaimed(Long userId, RewardDate rewardDate) {
         int count = dailyGoldRewardMapper.countByUserAndDate(userId, rewardDate.getValue());
         return count > 0;
     }

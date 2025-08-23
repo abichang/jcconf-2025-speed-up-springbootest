@@ -31,8 +31,9 @@ class DailyGoldRewardServiceTest {
         Long userId = 1L;
         Instant now = Instant.parse("2024-01-15T10:00:00Z");
 
+        RewardDate rewardDate = RewardDate.create(now);
         when(timeUtils.now()).thenReturn(now);
-        when(dailyGoldRewardRepository.hasClaimed(userId, now)).thenReturn(false);
+        when(dailyGoldRewardRepository.hasClaimed(userId, rewardDate)).thenReturn(false);
 
         dailyGoldRewardService.claim(userId);
 
@@ -53,8 +54,9 @@ class DailyGoldRewardServiceTest {
         Long userId = 1L;
         Instant now = Instant.parse("2024-01-15T10:00:00Z");
 
+        RewardDate rewardDate = RewardDate.create(now);
         when(timeUtils.now()).thenReturn(now);
-        when(dailyGoldRewardRepository.hasClaimed(userId, now)).thenReturn(true);
+        when(dailyGoldRewardRepository.hasClaimed(userId, rewardDate)).thenReturn(true);
 
         DailyGoldenClaimedException exception = assertThrows(
                 DailyGoldenClaimedException.class,

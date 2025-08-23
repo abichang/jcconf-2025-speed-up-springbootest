@@ -30,7 +30,8 @@ class DailyGoldRewardRepositoryImplTest {
 
         given_claimed(userId, 20240115);
 
-        boolean hasClaimed = dailyGoldRewardRepository.hasClaimed(userId, date);
+        RewardDate rewardDate = RewardDate.create(date);
+        boolean hasClaimed = dailyGoldRewardRepository.hasClaimed(userId, rewardDate);
 
         assertThat(hasClaimed).isTrue();
     }
@@ -45,7 +46,8 @@ class DailyGoldRewardRepositoryImplTest {
 
         given_not_claimed(userId, 20240115);
 
-        boolean hasClaimed = dailyGoldRewardRepository.hasClaimed(userId, date);
+        RewardDate rewardDate = RewardDate.create(date);
+        boolean hasClaimed = dailyGoldRewardRepository.hasClaimed(userId, rewardDate);
 
         assertThat(hasClaimed).isFalse();
     }

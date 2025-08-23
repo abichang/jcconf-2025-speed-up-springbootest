@@ -32,7 +32,8 @@ public class DailyGoldRewardService {
     public void claim(Long userId) {
 
         Instant now = timeUtils.now();
-        if (dailyGoldRewardRepository.hasClaimed(userId, now)) {
+        RewardDate rewardDate = RewardDate.create(now);
+        if (dailyGoldRewardRepository.hasClaimed(userId, rewardDate)) {
             throw new DailyGoldenClaimedException("userId=%s".formatted(userId));
         }
 
@@ -40,7 +41,7 @@ public class DailyGoldRewardService {
 
         DailyGoldReward reward = new DailyGoldReward();
         reward.setUserId(userId);
-        reward.setRewardDate(RewardDate.create(now));
+        reward.setRewardDate(rewardDate);
         reward.setAmount(DAILY_GOLD_AMOUNT);
         reward.setCreatedAt(now);
         dailyGoldRewardRepository.claim(reward);
