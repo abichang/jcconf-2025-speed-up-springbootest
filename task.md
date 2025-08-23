@@ -80,7 +80,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 #### DailyGoldRewardServiceTransactionalTest (@SpringBootTest)
 
-- [ ] Task 32: DailyGoldRewardServiceTransactionalTest - claim_fail_wallet_rollback
+- [x] Task 32: DailyGoldRewardServiceTransactionalTest - claim_fail_wallet_rollback
 
 ### Controller 層
 
