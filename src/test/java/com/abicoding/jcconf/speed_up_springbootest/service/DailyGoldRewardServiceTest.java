@@ -93,4 +93,26 @@ class DailyGoldRewardServiceTest {
                 .when(dailyGoldRewardRepository)
                 .hasClaimed(user, rewardDate);
     }
+
+    @Test
+    void handle_user_not_found() {
+        Long userId = 404L;
+
+        given_now("2024-01-15T10:00:00Z");
+        given_user_not_found(userId);
+
+        UserNotFoundException actualException = assertThrows(
+                UserNotFoundException.class,
+                () -> dailyGoldRewardService.claim(userId)
+        );
+
+        assertThat(actualException.getMessage()).isEqualTo("userId=" + userId);
+        verify(walletRepository, never()).addGold(anyLong(), anyLong(), any(Instant.class));
+        verify(dailyGoldRewardRepository, never()).claim(any(DailyGoldReward.class));
+    }
+
+    private void given_user_not_found(Long userId) {
+        doThrow(new UserNotFoundException("userId=" + userId))
+                .when(userRepository).getById(userId);
+    }
 }
