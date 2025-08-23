@@ -49,7 +49,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 ### 實體層
 
-- [ ] Task 13: 建立 User, Wallet, DailyGoldReward entity 物件 (用於 Repository Interface + Service 層)
+- [x] Task 13: 建立 User, Wallet, DailyGoldReward entity 物件 (用於 Repository Interface + Service 層)
 
 ### Repository 層
 
