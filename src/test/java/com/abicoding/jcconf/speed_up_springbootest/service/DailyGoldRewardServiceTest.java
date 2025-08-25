@@ -115,4 +115,22 @@ class DailyGoldRewardServiceTest {
         doThrow(new UserNotFoundException("userId=" + userId))
                 .when(userRepository).getById(userId);
     }
+
+    @Test
+    void can_claim_again_after_utc_midnight() {
+        User user = given_user();
+
+        Instant day1 = given_now("2024-01-15T23:59:59Z");
+        given_not_claim_yet(user, RewardDate.restore(20240115));
+        dailyGoldRewardService.claim(user.getId());
+        verify(walletRepository).addGold(user.getId(), 10L, day1);
+
+        Instant day2 = given_now("2024-01-16T00:00:01Z");
+        given_not_claim_yet(user, RewardDate.restore(20240116));
+        dailyGoldRewardService.claim(user.getId());
+        verify(walletRepository).addGold(user.getId(), 10L, day2);
+
+        verify(dailyGoldRewardRepository, times(2))
+                .claim(any(DailyGoldReward.class));
+    }
 }

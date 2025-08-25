@@ -49,13 +49,6 @@ class DailyGoldRewardControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    void can_claim_again_after_utc_midnight() throws Exception {
-        doNothing().when(dailyGoldRewardService).claim(1L);
-
-        mockMvc.perform(post("/user/1/daily-golden"))
-                .andExpect(status().isOk());
-    }
 
     @Test
     void invalid_user_id() throws Exception {
