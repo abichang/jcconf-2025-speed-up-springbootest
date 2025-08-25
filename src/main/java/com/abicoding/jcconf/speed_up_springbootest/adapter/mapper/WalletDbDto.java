@@ -22,4 +22,14 @@ public class WalletDbDto {
         wallet.setUpdatedAt(Instant.ofEpochMilli(getUpdatedAt()));
         return wallet;
     }
+
+    public static WalletDbDto from(Wallet wallet) {
+        WalletDbDto dto = new WalletDbDto();
+        dto.setUserId(wallet.getUserId());
+        dto.setGold(wallet.getGold());
+        dto.setVersion(wallet.getVersion());
+        dto.setCreatedAt(wallet.getCreatedAt().toEpochMilli());
+        dto.setUpdatedAt(wallet.getUpdatedAt().toEpochMilli());
+        return dto;
+    }
 }

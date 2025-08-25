@@ -27,4 +27,11 @@ public interface WalletMapper {
             WHERE user_id = #{userId}
             """)
     void addGold(Long userId, Long amount, Long updatedAt);
+
+    @Update("""
+            UPDATE wallet 
+            SET gold = #{gold}, version = #{version}, updated_at = #{updatedAt} 
+            WHERE user_id = #{userId} AND version = #{version} - 1
+            """)
+    int update(WalletDbDto wallet);
 }

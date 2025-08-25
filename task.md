@@ -102,7 +102,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - [x] Task 43: 在 Wallet entity 加入 version 欄位
 - [x] Task 44: 在 Wallet entity 加入 addGold(amount, updatedAt) 方法
 - [x] Task 45: 在 WalletRepository interface 加入 save(wallet) 方法
-- [ ] Task 46: 在 WalletMapper 加入 update(wallet) 方法 (使用 version 樂觀鎖)
+- [x] Task 46: 在 WalletMapper 加入 update(wallet) 方法 (使用 version 樂觀鎖)
 - [ ] Task 47: 更新 WalletMapperTest 測試：update_success、update_optimistic_lock_conflict
 - [ ] Task 48: 在 WalletRepositoryImpl 實作 save(wallet) 方法 (處理樂觀鎖衝突)
 - [ ] Task 49: 更新 WalletRepositoryImplTest 測試：save_success、save_optimistic_lock_conflict
