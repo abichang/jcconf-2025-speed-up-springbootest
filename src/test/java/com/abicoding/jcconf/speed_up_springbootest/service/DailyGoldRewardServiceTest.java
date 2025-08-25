@@ -135,4 +135,25 @@ class DailyGoldRewardServiceTest {
         doThrow(new UserNotFoundException("userId=" + userId))
                 .when(userRepository).getById(userId);
     }
+
+    @Test
+    void handle_optimistic_lock_conflict() {
+        Instant now = given_now("2024-01-15T10:00:00Z");
+
+        User user = given_user();
+        given_wallet(user.getId(), 500L, now);
+        RewardDate rewardDate = RewardDate.restore(20240115);
+        given_not_claim_yet(user, rewardDate);
+
+        doThrow(new OptimisticLockException("userId=1, version=1"))
+                .when(walletRepository).save(any(Wallet.class));
+
+        OptimisticLockException actualException = assertThrows(
+                OptimisticLockException.class,
+                () -> dailyGoldRewardService.claim(user.getId())
+        );
+
+        assertThat(actualException.getMessage()).isEqualTo("userId=1, version=1");
+        verify(dailyGoldRewardRepository, never()).claim(any(DailyGoldReward.class));
+    }
 }
