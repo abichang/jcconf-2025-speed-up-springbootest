@@ -96,22 +96,25 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 ### 重構 Service 使用 Domain Model 方式
 
-- [ ] Task 40: 在 Wallet entity 加入 version 欄位用於樂觀鎖
-- [ ] Task 41: 新增 WalletTest 測試 version 欄位基本功能
-- [ ] Task 42: 在 Wallet entity 加入 addGold(amount, updatedAt) 方法
-- [ ] Task 43: 在 WalletTest 中測試 addGold 邏輯和 version 自動更新
-- [ ] Task 44: 在 WalletRepository interface 加入 save(wallet) 方法
-- [ ] Task 45: 在 WalletMapper 加入 update(wallet) 方法 (使用 version 樂觀鎖)
-- [ ] Task 46: 更新 WalletMapperTest 測試：update_success、update_optimistic_lock_conflict
-- [ ] Task 47: 在 WalletRepositoryImpl 實作 save(wallet) 方法 (處理樂觀鎖衝突)
-- [ ] Task 48: 更新 WalletRepositoryImplTest 測試：save_success、save_optimistic_lock_conflict
-- [ ] Task 49: 修改 DailyGoldRewardService 使用新方式 (wallet.addGold + walletRepository.save)
-- [ ] Task 50: 更新 DailyGoldRewardServiceTest 相關測試：claim_all_ok、handle_optimistic_lock_conflict
-- [ ] Task 51: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
+- [ ] Task 40: 在 WalletDbDto 加入 version 欄位並建立資料庫 migration
+- [ ] Task 41: 在 WalletMapper 加入 selectByUserId 的 version 欄位查詢
+- [ ] Task 42: 更新 WalletMapperTest 確保 version 欄位測試通過
+- [ ] Task 43: 在 Wallet entity 加入 version 欄位
+- [ ] Task 44: 新增 WalletTest 測試 version 欄位基本功能
+- [ ] Task 45: 在 Wallet entity 加入 addGold(amount, updatedAt) 方法
+- [ ] Task 46: 在 WalletTest 中測試 addGold 邏輯和 version 自動更新
+- [ ] Task 47: 在 WalletRepository interface 加入 save(wallet) 方法
+- [ ] Task 48: 在 WalletMapper 加入 update(wallet) 方法 (使用 version 樂觀鎖)
+- [ ] Task 49: 更新 WalletMapperTest 測試：update_success、update_optimistic_lock_conflict
+- [ ] Task 50: 在 WalletRepositoryImpl 實作 save(wallet) 方法 (處理樂觀鎖衝突)
+- [ ] Task 51: 更新 WalletRepositoryImplTest 測試：save_success、save_optimistic_lock_conflict
+- [ ] Task 52: 修改 DailyGoldRewardService 使用新方式 (wallet.addGold + walletRepository.save)
+- [ ] Task 53: 更新 DailyGoldRewardServiceTest 相關測試：claim_all_ok、handle_optimistic_lock_conflict
+- [ ] Task 54: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
 
 ### 文件
 
-- [x] Task 52: 建立 task.md 檔案記錄所有測試案例和任務
+- [x] Task 55: 建立 task.md 檔案記錄所有測試案例和任務
 
 ## 測試策略
 
