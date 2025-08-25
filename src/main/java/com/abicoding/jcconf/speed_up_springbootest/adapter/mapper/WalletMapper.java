@@ -9,15 +9,15 @@ import org.apache.ibatis.annotations.Update;
 public interface WalletMapper {
 
     @Select("""
-            SELECT user_id, gold, created_at, updated_at 
+            SELECT user_id, gold, version, created_at, updated_at 
             FROM wallet 
             WHERE user_id = #{userId}
             """)
     WalletDbDto selectByUserId(Long userId);
 
     @Insert("""
-            INSERT INTO wallet (user_id, gold, created_at, updated_at) 
-            VALUES (#{userId}, #{gold}, #{createdAt}, #{updatedAt})
+            INSERT INTO wallet (user_id, gold, version, created_at, updated_at) 
+            VALUES (#{userId}, #{gold}, #{version}, #{createdAt}, #{updatedAt})
             """)
     void insert(WalletDbDto wallet);
 

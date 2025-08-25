@@ -66,6 +66,7 @@ class DailyGoldRewardServiceTransactionalTest {
         WalletDbDto walletDbDto = new WalletDbDto();
         walletDbDto.setUserId(user.getId());
         walletDbDto.setGold(initialGold);
+        walletDbDto.setVersion(1L);
         walletDbDto.setCreatedAt(0L);
         walletDbDto.setUpdatedAt(0L);
         walletMapper.insert(walletDbDto);

@@ -97,8 +97,8 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 ### 重構 Service 使用 Domain Model 方式
 
 - [x] Task 40: 在 WalletDbDto 加入 version 欄位並建立資料庫 migration
-- [ ] Task 41: 在 WalletMapper 加入 selectByUserId 的 version 欄位查詢
-- [ ] Task 42: 更新 WalletMapperTest 確保 version 欄位測試通過
+- [x] Task 41: 在 WalletMapper 加入 selectByUserId 的 version 欄位查詢
+- [x] Task 42: 更新 WalletMapperTest 確保 version 欄位測試通過
 - [ ] Task 43: 在 Wallet entity 加入 version 欄位
 - [ ] Task 44: 新增 WalletTest 測試 version 欄位基本功能
 - [ ] Task 45: 在 Wallet entity 加入 addGold(amount, updatedAt) 方法

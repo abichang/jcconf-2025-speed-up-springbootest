@@ -44,6 +44,7 @@ class WalletMapperTest {
         WalletDbDto wallet = new WalletDbDto();
         wallet.setUserId(user.getId());
         wallet.setGold(500L);
+        wallet.setVersion(1L);
         wallet.setCreatedAt(user.getCreatedAt());
         wallet.setUpdatedAt(user.getUpdatedAt());
         return wallet;
