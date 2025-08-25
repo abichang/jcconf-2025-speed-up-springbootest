@@ -77,4 +77,36 @@ class WalletMapperTest {
 
         assertThat(actualWallet).isNull();
     }
+
+    @Test
+    void update_success() {
+        UserDbDto user = given_user();
+
+        WalletDbDto originalWallet = given_wallet(user);
+        originalWallet.setGold(150L);
+        originalWallet.setUpdatedAt(Instant.now().toEpochMilli());
+
+        int affectedRows = walletMapper.update(originalWallet);
+        assertThat(affectedRows).isEqualTo(1);
+
+        WalletDbDto updatedWallet = walletMapper.selectByUserId(user.getId());
+        assertThat(updatedWallet.getGold()).isEqualTo(150L);
+        assertThat(updatedWallet.getVersion()).isEqualTo(2L);
+        assertThat(updatedWallet.getUpdatedAt()).isEqualTo(originalWallet.getUpdatedAt());
+    }
+
+    @Test
+    void update_optimistic_lock_conflict() {
+        UserDbDto user = given_user();
+
+        WalletDbDto originalWallet = given_wallet(user);
+        walletMapper.update(originalWallet);
+
+        originalWallet.setGold(150L);
+        originalWallet.setVersion(1L);
+        originalWallet.setUpdatedAt(Instant.now().toEpochMilli());
+
+        int affectedRows = walletMapper.update(originalWallet);
+        assertThat(affectedRows).isEqualTo(0);
+    }
 }
