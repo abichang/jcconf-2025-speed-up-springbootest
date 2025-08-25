@@ -96,7 +96,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 ### 重構 Service 使用 Domain Model 方式
 
-- [ ] Task 40: 在 WalletDbDto 加入 version 欄位並建立資料庫 migration
+- [x] Task 40: 在 WalletDbDto 加入 version 欄位並建立資料庫 migration
 - [ ] Task 41: 在 WalletMapper 加入 selectByUserId 的 version 欄位查詢
 - [ ] Task 42: 更新 WalletMapperTest 確保 version 欄位測試通過
 - [ ] Task 43: 在 Wallet entity 加入 version 欄位
@@ -129,6 +129,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 ### WalletTest (單元測試)
 
 #### addGold_should_update_gold_and_version
+
 ```
 Given: Wallet(gold=100, version=1, updatedAt=t1)
 When: wallet.addGold(50, t2)
@@ -136,6 +137,7 @@ Then: gold=150, version=2, updatedAt=t2
 ```
 
 #### addGold_should_handle_negative_amount
+
 ```
 Given: Wallet(gold=100, version=1)
 When: wallet.addGold(-30, now)
@@ -145,6 +147,7 @@ Then: gold=70, version=2
 ### WalletMapperTest 新增測試
 
 #### update_success
+
 ```
 Given: 資料庫有 wallet(user_id=1, gold=100, version=1)
 When: walletMapper.update(Wallet(user_id=1, gold=150, version=1))
@@ -152,6 +155,7 @@ Then: 資料庫更新為 gold=150, version=2, 回傳 affected rows = 1
 ```
 
 #### update_optimistic_lock_conflict
+
 ```
 Given: 資料庫有 wallet(user_id=1, gold=100, version=2)
 When: walletMapper.update(Wallet(user_id=1, gold=150, version=1))
@@ -161,6 +165,7 @@ Then: 更新失敗，affected rows = 0 (版本不匹配)
 ### WalletRepositoryImplTest 新增測試
 
 #### save_success
+
 ```
 Given: walletMapper.update() 回傳 1 (成功更新)
 When: walletRepository.save(wallet)
@@ -168,6 +173,7 @@ Then: 執行無異常
 ```
 
 #### save_optimistic_lock_conflict
+
 ```
 Given: walletMapper.update() 回傳 0 (版本衝突)
 When: walletRepository.save(wallet)
@@ -177,6 +183,7 @@ Then: 拋出 OptimisticLockException
 ### DailyGoldRewardServiceTest 新增測試
 
 #### handle_optimistic_lock_conflict
+
 ```
 Given: walletRepository.getByUserId() 回傳 wallet
        wallet.addGold() 執行成功

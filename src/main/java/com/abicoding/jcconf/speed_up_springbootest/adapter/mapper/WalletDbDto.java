@@ -9,6 +9,7 @@ import java.time.Instant;
 public class WalletDbDto {
     private Long userId;
     private Long gold;
+    private Long version;
     private Long createdAt;
     private Long updatedAt;
 
