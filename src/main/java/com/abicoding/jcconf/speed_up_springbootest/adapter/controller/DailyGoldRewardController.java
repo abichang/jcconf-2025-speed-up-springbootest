@@ -1,9 +1,9 @@
 package com.abicoding.jcconf.speed_up_springbootest.adapter.controller;
 
+import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.UserNotFoundException;
+import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.WalletNotFoundException;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardService;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldenClaimedException;
-import com.abicoding.jcconf.speed_up_springbootest.service.UserNotFoundException;
-import com.abicoding.jcconf.speed_up_springbootest.service.WalletNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

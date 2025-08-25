@@ -1,4 +1,4 @@
-package com.abicoding.jcconf.speed_up_springbootest.service;
+package com.abicoding.jcconf.speed_up_springbootest.adapter.repository;
 
 public class OptimisticLockException extends RuntimeException {
     public OptimisticLockException(String message) {

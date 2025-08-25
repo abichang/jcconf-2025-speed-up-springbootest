@@ -1,9 +1,9 @@
 package com.abicoding.jcconf.speed_up_springbootest.adapter.controller;
 
+import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.UserNotFoundException;
+import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.WalletNotFoundException;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardService;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldenClaimedException;
-import com.abicoding.jcconf.speed_up_springbootest.service.UserNotFoundException;
-import com.abicoding.jcconf.speed_up_springbootest.service.WalletNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
