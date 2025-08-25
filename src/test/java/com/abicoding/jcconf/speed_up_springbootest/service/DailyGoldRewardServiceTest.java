@@ -156,4 +156,26 @@ class DailyGoldRewardServiceTest {
         assertThat(actualException.getMessage()).isEqualTo("userId=1, version=1");
         verify(dailyGoldRewardRepository, never()).claim(any(DailyGoldReward.class));
     }
+
+    @Test
+    void handle_wallet_not_found() {
+        given_now("2024-01-15T10:00:00Z");
+
+        User user = given_user();
+        given_wallet_not_found(user.getId());
+
+        WalletNotFoundException actualException = assertThrows(
+                WalletNotFoundException.class,
+                () -> dailyGoldRewardService.claim(user.getId())
+        );
+
+        assertThat(actualException.getMessage()).isEqualTo("userId=" + user.getId());
+        verify(walletRepository, never()).save(any(Wallet.class));
+        verify(dailyGoldRewardRepository, never()).claim(any(DailyGoldReward.class));
+    }
+
+    private void given_wallet_not_found(Long userId) {
+        doThrow(new WalletNotFoundException("userId=" + userId))
+                .when(walletRepository).getByUserId(userId);
+    }
 }
