@@ -99,7 +99,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - [x] Task 40: 在 WalletDbDto 加入 version 欄位並建立資料庫 migration
 - [x] Task 41: 在 WalletMapper 加入 selectByUserId 的 version 欄位查詢
 - [x] Task 42: 更新 WalletMapperTest 確保 version 欄位測試通過
-- [ ] Task 43: 在 Wallet entity 加入 version 欄位
+- [x] Task 43: 在 Wallet entity 加入 version 欄位
 - [ ] Task 44: 新增 WalletTest 測試 version 欄位基本功能
 - [ ] Task 45: 在 Wallet entity 加入 addGold(amount, updatedAt) 方法
 - [ ] Task 46: 在 WalletTest 中測試 addGold 邏輯和 version 自動更新

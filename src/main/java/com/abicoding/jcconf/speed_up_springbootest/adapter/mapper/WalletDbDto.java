@@ -17,6 +17,7 @@ public class WalletDbDto {
         Wallet wallet = new Wallet();
         wallet.setUserId(getUserId());
         wallet.setGold(getGold());
+        wallet.setVersion(getVersion());
         wallet.setCreatedAt(Instant.ofEpochMilli(getCreatedAt()));
         wallet.setUpdatedAt(Instant.ofEpochMilli(getUpdatedAt()));
         return wallet;

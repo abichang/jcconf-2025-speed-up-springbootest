@@ -8,6 +8,7 @@ import java.time.Instant;
 public class Wallet {
     private Long userId;
     private Long gold;
+    private Long version;
     private Instant createdAt;
     private Instant updatedAt;
 }
