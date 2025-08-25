@@ -43,17 +43,6 @@ class WalletRepositoryImplTest {
     }
 
     @Test
-    void addGold_all_ok() {
-        Long userId = 1L;
-        Long amount = 50L;
-        Instant updatedAt = Instant.now();
-
-        walletRepository.addGold(userId, amount, updatedAt);
-
-        verify(walletMapper, times(1)).addGold(userId, amount, updatedAt.toEpochMilli());
-    }
-
-    @Test
     void getByUserId_wallet_not_existed() {
         Long userWithoutWallet = 404L;
 

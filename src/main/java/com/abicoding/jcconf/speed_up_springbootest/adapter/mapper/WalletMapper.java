@@ -23,13 +23,6 @@ public interface WalletMapper {
 
     @Update("""
             UPDATE wallet 
-            SET gold = gold + #{amount}, updated_at = #{updatedAt} 
-            WHERE user_id = #{userId}
-            """)
-    void addGold(Long userId, Long amount, Long updatedAt);
-
-    @Update("""
-            UPDATE wallet 
             SET gold = #{gold}, version = version + 1, updated_at = #{updatedAt} 
             WHERE user_id = #{userId} AND version = #{version}
             """)

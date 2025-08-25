@@ -8,8 +8,6 @@ import com.abicoding.jcconf.speed_up_springbootest.service.WalletNotFoundExcepti
 import com.abicoding.jcconf.speed_up_springbootest.service.WalletRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
-
 @Repository
 public class WalletRepositoryImpl implements WalletRepository {
 
@@ -26,11 +24,6 @@ public class WalletRepositoryImpl implements WalletRepository {
             throw new WalletNotFoundException("userId=%s".formatted(userId));
         }
         return walletDbDto.toEntity();
-    }
-
-    @Override
-    public void addGold(Long userId, Long amount, Instant updatedAt) {
-        walletMapper.addGold(userId, amount, updatedAt.toEpochMilli());
     }
 
     @Override

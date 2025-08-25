@@ -110,7 +110,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - [x] Task 50: 修改 DailyGoldRewardService 使用新方式 (wallet.addGold + walletRepository.save)
 - [x] Task 51: 更新 DailyGoldRewardServiceTest 相關測試：claim_all_ok、handle_optimistic_lock_conflict
 - [x] Task 52: 實作 DailyGoldRewardServiceTest - handle_wallet_not_found 測試案例
-- [ ] Task 53: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
+- [x] Task 53: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
 
 ### 文件
 
