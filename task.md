@@ -97,16 +97,21 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 ### 重構 Service 使用 Domain Model 方式
 
 - [ ] Task 40: 在 Wallet entity 加入 version 欄位用於樂觀鎖
-- [ ] Task 41: 在 Wallet entity 加入 addGold(amount, updatedAt) 方法並確保測試通過
-- [ ] Task 42: 在 WalletRepository interface 加入 save(wallet) 方法
-- [ ] Task 43: 在 WalletMapper 加入 update(wallet) 方法 (使用 version 樂觀鎖) 並更新 WalletMapperTest 測試通過
-- [ ] Task 44: 在 WalletRepositoryImpl 實作 save(wallet) 方法 (處理樂觀鎖衝突) 並更新 WalletRepositoryImplTest 測試通過
-- [ ] Task 45: 修改 DailyGoldRewardService 使用新方式 (wallet.addGold + walletRepository.save) 並更新相關測試
-- [ ] Task 46: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
+- [ ] Task 41: 新增 WalletTest 測試 version 欄位基本功能
+- [ ] Task 42: 在 Wallet entity 加入 addGold(amount, updatedAt) 方法
+- [ ] Task 43: 在 WalletTest 中測試 addGold 邏輯和 version 自動更新
+- [ ] Task 44: 在 WalletRepository interface 加入 save(wallet) 方法
+- [ ] Task 45: 在 WalletMapper 加入 update(wallet) 方法 (使用 version 樂觀鎖)
+- [ ] Task 46: 更新 WalletMapperTest 測試：update_success、update_optimistic_lock_conflict
+- [ ] Task 47: 在 WalletRepositoryImpl 實作 save(wallet) 方法 (處理樂觀鎖衝突)
+- [ ] Task 48: 更新 WalletRepositoryImplTest 測試：save_success、save_optimistic_lock_conflict
+- [ ] Task 49: 修改 DailyGoldRewardService 使用新方式 (wallet.addGold + walletRepository.save)
+- [ ] Task 50: 更新 DailyGoldRewardServiceTest 相關測試：claim_all_ok、handle_optimistic_lock_conflict
+- [ ] Task 51: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
 
 ### 文件
 
-- [x] Task 47: 建立 task.md 檔案記錄所有測試案例和任務
+- [x] Task 52: 建立 task.md 檔案記錄所有測試案例和任務
 
 ## 測試策略
 
@@ -115,6 +120,67 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - **Service Transactional**: @SpringBootTest + Real WalletRepository + Mock Other Dependencies (驗證事務回滾)
 - **Repository**: Mockito.mock() + Mock Mapper (UserRepository, WalletRepository, DailyGoldRewardRepository)
 - **Mapper**: @MybatisTest + Real H2 Database
+
+## 重構相關新測試案例
+
+### WalletTest (單元測試)
+
+#### addGold_should_update_gold_and_version
+```
+Given: Wallet(gold=100, version=1, updatedAt=t1)
+When: wallet.addGold(50, t2)
+Then: gold=150, version=2, updatedAt=t2
+```
+
+#### addGold_should_handle_negative_amount
+```
+Given: Wallet(gold=100, version=1)
+When: wallet.addGold(-30, now)
+Then: gold=70, version=2
+```
+
+### WalletMapperTest 新增測試
+
+#### update_success
+```
+Given: 資料庫有 wallet(user_id=1, gold=100, version=1)
+When: walletMapper.update(Wallet(user_id=1, gold=150, version=1))
+Then: 資料庫更新為 gold=150, version=2, 回傳 affected rows = 1
+```
+
+#### update_optimistic_lock_conflict
+```
+Given: 資料庫有 wallet(user_id=1, gold=100, version=2)
+When: walletMapper.update(Wallet(user_id=1, gold=150, version=1))
+Then: 更新失敗，affected rows = 0 (版本不匹配)
+```
+
+### WalletRepositoryImplTest 新增測試
+
+#### save_success
+```
+Given: walletMapper.update() 回傳 1 (成功更新)
+When: walletRepository.save(wallet)
+Then: 執行無異常
+```
+
+#### save_optimistic_lock_conflict
+```
+Given: walletMapper.update() 回傳 0 (版本衝突)
+When: walletRepository.save(wallet)
+Then: 拋出 OptimisticLockException
+```
+
+### DailyGoldRewardServiceTest 新增測試
+
+#### handle_optimistic_lock_conflict
+```
+Given: walletRepository.getByUserId() 回傳 wallet
+       wallet.addGold() 執行成功
+       walletRepository.save() 拋出 OptimisticLockException
+When: service.claim(1L)
+Then: 拋出 OptimisticLockException，不呼叫 dailyGoldRewardRepository.claim()
+```
 
 ## 詳細測試案例設計
 
