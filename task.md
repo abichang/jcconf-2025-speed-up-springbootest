@@ -100,17 +100,15 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - [x] Task 41: 在 WalletMapper 加入 selectByUserId 的 version 欄位查詢
 - [x] Task 42: 更新 WalletMapperTest 確保 version 欄位測試通過
 - [x] Task 43: 在 Wallet entity 加入 version 欄位
-- [ ] Task 44: 新增 WalletTest 測試 version 欄位基本功能
-- [ ] Task 45: 在 Wallet entity 加入 addGold(amount, updatedAt) 方法
-- [ ] Task 46: 在 WalletTest 中測試 addGold 邏輯和 version 自動更新
-- [ ] Task 47: 在 WalletRepository interface 加入 save(wallet) 方法
-- [ ] Task 48: 在 WalletMapper 加入 update(wallet) 方法 (使用 version 樂觀鎖)
-- [ ] Task 49: 更新 WalletMapperTest 測試：update_success、update_optimistic_lock_conflict
-- [ ] Task 50: 在 WalletRepositoryImpl 實作 save(wallet) 方法 (處理樂觀鎖衝突)
-- [ ] Task 51: 更新 WalletRepositoryImplTest 測試：save_success、save_optimistic_lock_conflict
-- [ ] Task 52: 修改 DailyGoldRewardService 使用新方式 (wallet.addGold + walletRepository.save)
-- [ ] Task 53: 更新 DailyGoldRewardServiceTest 相關測試：claim_all_ok、handle_optimistic_lock_conflict
-- [ ] Task 54: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
+- [ ] Task 44: 在 Wallet entity 加入 addGold(amount, updatedAt) 方法
+- [ ] Task 45: 在 WalletRepository interface 加入 save(wallet) 方法
+- [ ] Task 46: 在 WalletMapper 加入 update(wallet) 方法 (使用 version 樂觀鎖)
+- [ ] Task 47: 更新 WalletMapperTest 測試：update_success、update_optimistic_lock_conflict
+- [ ] Task 48: 在 WalletRepositoryImpl 實作 save(wallet) 方法 (處理樂觀鎖衝突)
+- [ ] Task 49: 更新 WalletRepositoryImplTest 測試：save_success、save_optimistic_lock_conflict
+- [ ] Task 50: 修改 DailyGoldRewardService 使用新方式 (wallet.addGold + walletRepository.save)
+- [ ] Task 51: 更新 DailyGoldRewardServiceTest 相關測試：claim_all_ok、handle_optimistic_lock_conflict
+- [ ] Task 52: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
 
 ### 文件
 
