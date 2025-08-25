@@ -31,4 +31,10 @@ public class WalletRepositoryImpl implements WalletRepository {
     public void addGold(Long userId, Long amount, Instant updatedAt) {
         walletMapper.addGold(userId, amount, updatedAt.toEpochMilli());
     }
+
+    @Override
+    public void save(Wallet wallet) {
+        // TODO: 實作樂觀鎖更新邏輯 (Task 48)
+        throw new UnsupportedOperationException("save method not implemented yet");
+    }
 }
