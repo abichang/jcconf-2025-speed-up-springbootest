@@ -13,16 +13,6 @@ public class WalletDbDto {
     private Long createdAt;
     private Long updatedAt;
 
-    public Wallet toEntity() {
-        Wallet wallet = new Wallet();
-        wallet.setUserId(getUserId());
-        wallet.setGold(getGold());
-        wallet.setVersion(getVersion());
-        wallet.setCreatedAt(Instant.ofEpochMilli(getCreatedAt()));
-        wallet.setUpdatedAt(Instant.ofEpochMilli(getUpdatedAt()));
-        return wallet;
-    }
-
     public static WalletDbDto from(Wallet wallet) {
         WalletDbDto dto = new WalletDbDto();
         dto.setUserId(wallet.getUserId());
@@ -31,5 +21,15 @@ public class WalletDbDto {
         dto.setCreatedAt(wallet.getCreatedAt().toEpochMilli());
         dto.setUpdatedAt(wallet.getUpdatedAt().toEpochMilli());
         return dto;
+    }
+
+    public Wallet toEntity() {
+        return Wallet.restore(
+                getUserId(),
+                getGold(),
+                getVersion(),
+                Instant.ofEpochMilli(getCreatedAt()),
+                Instant.ofEpochMilli(getUpdatedAt())
+        );
     }
 }
