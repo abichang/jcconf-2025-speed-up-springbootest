@@ -3,6 +3,7 @@ package com.abicoding.jcconf.speed_up_springbootest.adapter.repository;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.WalletDbDto;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.WalletMapper;
 import com.abicoding.jcconf.speed_up_springbootest.entity.Wallet;
+import com.abicoding.jcconf.speed_up_springbootest.service.OptimisticLockException;
 import com.abicoding.jcconf.speed_up_springbootest.service.WalletNotFoundException;
 import com.abicoding.jcconf.speed_up_springbootest.service.WalletRepository;
 import org.springframework.stereotype.Repository;
@@ -34,7 +35,11 @@ public class WalletRepositoryImpl implements WalletRepository {
 
     @Override
     public void save(Wallet wallet) {
-        // TODO: 實作樂觀鎖更新邏輯 (Task 48)
-        throw new UnsupportedOperationException("save method not implemented yet");
+        WalletDbDto walletDbDto = WalletDbDto.from(wallet);
+        int affectedRows = walletMapper.update(walletDbDto);
+        if (affectedRows == 0) {
+            throw new OptimisticLockException("userId=%s, version=%s".formatted(
+                    wallet.getUserId(), wallet.getVersion()));
+        }
     }
 }

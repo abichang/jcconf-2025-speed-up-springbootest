@@ -104,7 +104,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - [x] Task 45: 在 WalletRepository interface 加入 save(wallet) 方法
 - [x] Task 46: 在 WalletMapper 加入 update(wallet) 方法 (使用 version 樂觀鎖)
 - [x] Task 47: 更新 WalletMapperTest 測試：update_success、update_optimistic_lock_conflict
-- [ ] Task 48: 在 WalletRepositoryImpl 實作 save(wallet) 方法 (處理樂觀鎖衝突)
+- [x] Task 48: 在 WalletRepositoryImpl 實作 save(wallet) 方法 (處理樂觀鎖衝突)
 - [ ] Task 49: 更新 WalletRepositoryImplTest 測試：save_success、save_optimistic_lock_conflict
 - [ ] Task 50: 修改 DailyGoldRewardService 使用新方式 (wallet.addGold + walletRepository.save)
 - [ ] Task 51: 更新 DailyGoldRewardServiceTest 相關測試：claim_all_ok、handle_optimistic_lock_conflict
