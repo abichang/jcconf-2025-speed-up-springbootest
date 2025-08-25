@@ -77,22 +77,23 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - [x] Task 29: DailyGoldRewardServiceTest - claim_all_ok
 - [x] Task 30: DailyGoldRewardServiceTest - duplicate_claim
 - [x] Task 31: DailyGoldRewardServiceTest - handle_user_not_found
+- [ ] Task 32: DailyGoldRewardServiceTest - handle_wallet_not_found
 
 #### DailyGoldRewardServiceTransactionalTest (@SpringBootTest)
 
-- [x] Task 32: DailyGoldRewardServiceTransactionalTest - claim_fail_wallet_rollback
+- [x] Task 33: DailyGoldRewardServiceTransactionalTest - claim_fail_wallet_rollback
 
 ### Controller 層
 
-- [x] Task 33: 建立 DailyGoldRewardController
+- [x] Task 34: 建立 DailyGoldRewardController
 
 #### DailyGoldRewardControllerTest (使用 @SpringBootTest)
 
-- [x] Task 34: DailyGoldRewardControllerTest - claim_all_ok
-- [x] Task 35: DailyGoldRewardControllerTest - duplicate_claim
-- [x] Task 36: DailyGoldRewardControllerTest - user_not_found
-- [x] Task 37: DailyGoldRewardControllerTest - can_claim_again_after_utc_midnight
-- [x] Task 38: DailyGoldRewardControllerTest - invalid_user_id
+- [x] Task 35: DailyGoldRewardControllerTest - claim_all_ok
+- [x] Task 36: DailyGoldRewardControllerTest - duplicate_claim
+- [x] Task 37: DailyGoldRewardControllerTest - user_not_found
+- [x] Task 38: DailyGoldRewardControllerTest - can_claim_again_after_utc_midnight
+- [x] Task 39: DailyGoldRewardControllerTest - invalid_user_id
 
 ### 重構 Service 使用 Domain Model 方式
 
@@ -108,7 +109,8 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - [x] Task 49: 更新 WalletRepositoryImplTest 測試：save_success、save_optimistic_lock_conflict
 - [x] Task 50: 修改 DailyGoldRewardService 使用新方式 (wallet.addGold + walletRepository.save)
 - [ ] Task 51: 更新 DailyGoldRewardServiceTest 相關測試：claim_all_ok、handle_optimistic_lock_conflict
-- [ ] Task 52: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
+- [ ] Task 52: 實作 DailyGoldRewardServiceTest - handle_wallet_not_found 測試案例
+- [ ] Task 53: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
 
 ### 文件
 
@@ -265,9 +267,19 @@ Then: 拋出DailyGoldenClaimedException("userId=1")
 #### handle_user_not_found
 
 ```
-Given: userRepository.getById(999L)回傳null
+Given: userRepository.getById(999L)拋出UserNotFoundException
 When: service.claim(999L)
 Then: 拋出UserNotFoundException("userId=999")
+```
+
+#### handle_wallet_not_found
+
+```
+Given: userRepository.getById(1L)回傳正常User物件
+       walletRepository.getByUserId(1L)拋出WalletNotFoundException
+When: service.claim(1L)
+Then: 拋出WalletNotFoundException("userId=1")，
+      不呼叫dailyGoldRewardRepository相關方法
 ```
 
 ### 3. DailyGoldRewardServiceTransactionalTest (@SpringBootTest)
