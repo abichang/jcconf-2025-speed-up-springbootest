@@ -96,16 +96,17 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 ### 重構 Service 使用 Domain Model 方式
 
-- [ ] Task 40: 在 Wallet entity 加入 addGold(amount, updatedAt) 方法並確保測試通過
-- [ ] Task 41: 在 WalletRepository interface 加入 save(wallet) 方法
-- [ ] Task 42: 在 WalletMapper 加入 update(wallet) 方法並更新 WalletMapperTest 測試通過
-- [ ] Task 43: 在 WalletRepositoryImpl 實作 save(wallet) 方法並更新 WalletRepositoryImplTest 測試通過
-- [ ] Task 44: 修改 DailyGoldRewardService 使用新方式 (wallet.addGold + walletRepository.save) 並更新相關測試
-- [ ] Task 45: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
+- [ ] Task 40: 在 Wallet entity 加入 version 欄位用於樂觀鎖
+- [ ] Task 41: 在 Wallet entity 加入 addGold(amount, updatedAt) 方法並確保測試通過
+- [ ] Task 42: 在 WalletRepository interface 加入 save(wallet) 方法
+- [ ] Task 43: 在 WalletMapper 加入 update(wallet) 方法 (使用 version 樂觀鎖) 並更新 WalletMapperTest 測試通過
+- [ ] Task 44: 在 WalletRepositoryImpl 實作 save(wallet) 方法 (處理樂觀鎖衝突) 並更新 WalletRepositoryImplTest 測試通過
+- [ ] Task 45: 修改 DailyGoldRewardService 使用新方式 (wallet.addGold + walletRepository.save) 並更新相關測試
+- [ ] Task 46: 運行所有測試確保重構成功，移除專案裡所有未被使用的程式碼
 
 ### 文件
 
-- [x] Task 46: 建立 task.md 檔案記錄所有測試案例和任務
+- [x] Task 47: 建立 task.md 檔案記錄所有測試案例和任務
 
 ## 測試策略
 
