@@ -84,7 +84,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 ### Controller 層
 
-- [ ] Task 33: 建立 DailyGoldRewardController
+- [x] Task 33: 建立 DailyGoldRewardController
 
 #### DailyGoldRewardControllerTest (使用 @SpringBootTest)
 
