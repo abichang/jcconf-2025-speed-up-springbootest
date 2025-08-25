@@ -3,6 +3,7 @@ package com.abicoding.jcconf.speed_up_springbootest.adapter.controller;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardService;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldenClaimedException;
 import com.abicoding.jcconf.speed_up_springbootest.service.UserNotFoundException;
+import com.abicoding.jcconf.speed_up_springbootest.service.WalletNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -43,6 +44,15 @@ class DailyGoldRewardControllerTest {
     @Test
     void user_not_found() throws Exception {
         doThrow(new UserNotFoundException("userId=999"))
+                .when(dailyGoldRewardService).claim(999L);
+
+        mockMvc.perform(post("/user/999/daily-golden"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void wallet_not_found() throws Exception {
+        doThrow(new WalletNotFoundException("userId=999"))
                 .when(dailyGoldRewardService).claim(999L);
 
         mockMvc.perform(post("/user/999/daily-golden"))
