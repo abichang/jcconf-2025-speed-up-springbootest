@@ -11,4 +11,10 @@ public class Wallet {
     private Long version;
     private Instant createdAt;
     private Instant updatedAt;
+
+    public void addGold(Long amount, Instant updatedAt) {
+        this.gold += amount;
+        this.version += 1;
+        this.updatedAt = updatedAt;
+    }
 }
