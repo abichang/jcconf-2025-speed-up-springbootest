@@ -88,16 +88,15 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 #### DailyGoldRewardControllerTest (使用 @SpringBootTest)
 
-- [ ] Task 34: DailyGoldRewardControllerTest - shouldClaimDailyGoldenSuccessfully
-- [ ] Task 35: DailyGoldRewardControllerTest - shouldReturnConflictWhenAlreadyClaimedToday
-- [ ] Task 36: DailyGoldRewardControllerTest - shouldReturnNotFoundWhenUserNotExists
-- [ ] Task 37: DailyGoldRewardControllerTest - shouldClaimAfterMidnightUTCReset
-- [ ] Task 38: DailyGoldRewardControllerTest - shouldHandleTimezoneCorrectly
-- [ ] Task 39: DailyGoldRewardControllerTest - shouldValidateUserIdFormat
+- [ ] Task 34: DailyGoldRewardControllerTest - claim_all_ok
+- [ ] Task 35: DailyGoldRewardControllerTest - duplicate_claim
+- [ ] Task 36: DailyGoldRewardControllerTest - user_not_found
+- [ ] Task 37: DailyGoldRewardControllerTest - can_claim_again_after_utc_midnight
+- [ ] Task 38: DailyGoldRewardControllerTest - invalid_user_id
 
 ### 文件
 
-- [x] Task 40: 建立 task.md 檔案記錄所有測試案例和任務
+- [x] Task 39: 建立 task.md 檔案記錄所有測試案例和任務
 
 ## 測試策略
 
