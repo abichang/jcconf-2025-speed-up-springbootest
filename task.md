@@ -88,11 +88,11 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 
 #### DailyGoldRewardControllerTest (使用 @SpringBootTest)
 
-- [ ] Task 34: DailyGoldRewardControllerTest - claim_all_ok
-- [ ] Task 35: DailyGoldRewardControllerTest - duplicate_claim
-- [ ] Task 36: DailyGoldRewardControllerTest - user_not_found
-- [ ] Task 37: DailyGoldRewardControllerTest - can_claim_again_after_utc_midnight
-- [ ] Task 38: DailyGoldRewardControllerTest - invalid_user_id
+- [x] Task 34: DailyGoldRewardControllerTest - claim_all_ok
+- [x] Task 35: DailyGoldRewardControllerTest - duplicate_claim
+- [x] Task 36: DailyGoldRewardControllerTest - user_not_found
+- [x] Task 37: DailyGoldRewardControllerTest - can_claim_again_after_utc_midnight
+- [x] Task 38: DailyGoldRewardControllerTest - invalid_user_id
 
 ### 文件
 
