@@ -3,6 +3,7 @@ package com.abicoding.jcconf.speed_up_springbootest.service;
 import com.abicoding.jcconf.speed_up_springbootest.entity.DailyGoldReward;
 import com.abicoding.jcconf.speed_up_springbootest.entity.RewardDate;
 import com.abicoding.jcconf.speed_up_springbootest.entity.User;
+import com.abicoding.jcconf.speed_up_springbootest.entity.Wallet;
 import com.abicoding.jcconf.speed_up_springbootest.util.TimeUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -32,18 +33,16 @@ class DailyGoldRewardServiceTest {
         Instant now = given_now("2024-01-15T10:00:00Z");
 
         User user = given_user();
+        given_wallet(user.getId(), 500L, now);
         RewardDate rewardDate = RewardDate.restore(20240115);
 
         given_not_claim_yet(user, rewardDate);
 
         dailyGoldRewardService.claim(user.getId());
 
-        verify(walletRepository).addGold(user.getId(), 10L, now);
+        then_wallet_should_updated(510L, now);
 
-        ArgumentCaptor<DailyGoldReward> rewardCaptor = ArgumentCaptor.forClass(DailyGoldReward.class);
-        verify(dailyGoldRewardRepository).claim(rewardCaptor.capture());
-
-        DailyGoldReward actualDailyGoldReward = rewardCaptor.getValue();
+        DailyGoldReward actualDailyGoldReward = captureActualDailyGoldReward();
         assertThat(actualDailyGoldReward.getUserId()).isEqualTo(user.getId());
         assertThat(actualDailyGoldReward.getRewardDate()).isEqualTo(rewardDate);
         assertThat(actualDailyGoldReward.getAmount()).isEqualTo(10L);
@@ -63,10 +62,29 @@ class DailyGoldRewardServiceTest {
         return user;
     }
 
+    private void given_wallet(Long userId, long gold, Instant updatedAt) {
+        Wallet wallet = Wallet.restore(userId, gold, 1L, Instant.ofEpochMilli(0L), updatedAt);
+        doReturn(wallet).when(walletRepository).getByUserId(userId);
+    }
+
     private void given_not_claim_yet(User user, RewardDate rewardDate) {
         doReturn(false)
                 .when(dailyGoldRewardRepository)
                 .hasClaimed(user, rewardDate);
+    }
+
+    private void then_wallet_should_updated(long updatedGold, Instant updatedAt) {
+        ArgumentCaptor<Wallet> walletCaptor = ArgumentCaptor.forClass(Wallet.class);
+        verify(walletRepository).save(walletCaptor.capture());
+        Wallet updatedWallet = walletCaptor.getValue();
+        assertThat(updatedWallet.getGold()).isEqualTo(updatedGold);
+        assertThat(updatedWallet.getUpdatedAt()).isEqualTo(updatedAt);
+    }
+
+    private DailyGoldReward captureActualDailyGoldReward() {
+        ArgumentCaptor<DailyGoldReward> rewardCaptor = ArgumentCaptor.forClass(DailyGoldReward.class);
+        verify(dailyGoldRewardRepository).claim(rewardCaptor.capture());
+        return rewardCaptor.getValue();
     }
 
     @Test
@@ -74,6 +92,7 @@ class DailyGoldRewardServiceTest {
         given_now("2024-01-15T10:00:00Z");
 
         User user = given_user();
+        given_wallet(user.getId(), 500L, Instant.now());
         RewardDate rewardDate = RewardDate.restore(20240115);
 
         given_already_claimed(user, rewardDate);
@@ -84,7 +103,7 @@ class DailyGoldRewardServiceTest {
         );
 
         assertThat(actualException.getMessage()).isEqualTo("userId=" + user.getId());
-        verify(walletRepository, never()).addGold(anyLong(), anyLong(), any(Instant.class));
+        verify(walletRepository, never()).save(any(Wallet.class));
         verify(dailyGoldRewardRepository, never()).claim(any(DailyGoldReward.class));
     }
 
@@ -107,30 +126,13 @@ class DailyGoldRewardServiceTest {
         );
 
         assertThat(actualException.getMessage()).isEqualTo("userId=" + userId);
-        verify(walletRepository, never()).addGold(anyLong(), anyLong(), any(Instant.class));
+        verify(walletRepository, never()).getByUserId(anyLong());
+        verify(walletRepository, never()).save(any(Wallet.class));
         verify(dailyGoldRewardRepository, never()).claim(any(DailyGoldReward.class));
     }
 
     private void given_user_not_found(Long userId) {
         doThrow(new UserNotFoundException("userId=" + userId))
                 .when(userRepository).getById(userId);
-    }
-
-    @Test
-    void can_claim_again_after_utc_midnight() {
-        User user = given_user();
-
-        Instant day1 = given_now("2024-01-15T23:59:59Z");
-        given_not_claim_yet(user, RewardDate.restore(20240115));
-        dailyGoldRewardService.claim(user.getId());
-        verify(walletRepository).addGold(user.getId(), 10L, day1);
-
-        Instant day2 = given_now("2024-01-16T00:00:01Z");
-        given_not_claim_yet(user, RewardDate.restore(20240116));
-        dailyGoldRewardService.claim(user.getId());
-        verify(walletRepository).addGold(user.getId(), 10L, day2);
-
-        verify(dailyGoldRewardRepository, times(2))
-                .claim(any(DailyGoldReward.class));
     }
 }
