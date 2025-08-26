@@ -516,7 +516,7 @@ CREATE TABLE daily_gold_reward
 - [x] Task 56: 設置 @SystemDbTest 測試基礎架構
 - [x] Task 57: 重寫 claim_all_ok - 使用真實資料庫驗證完整流程
 - [x] Task 58: 重寫 claim_duplicate_same_day - 測試同一天重複領取的錯誤處理
-- [ ] Task 59: 重寫 claim_user_not_found - 測試使用者不存在的異常處理
+- [x] Task 59: 重寫 claim_user_not_found - 測試使用者不存在的異常處理
 - [ ] Task 60: 重寫 claim_wallet_not_found - 測試錢包不存在的異常處理
 - [ ] Task 61: 新增 claim_utc_midnight_reset - 測試 UTC 午夜重設功能
 - [ ] Task 62: 新增 claim_multiple_users_same_day - 測試多用戶同一天領取

@@ -109,4 +109,17 @@ class DailyGoldRewardControllerIntegrationTest {
         assertThat(dailyGoldRewardMapper.countByUserAndDate(userId, 20240115))
                 .isEqualTo(1);
     }
+
+    @Test
+    void claim_user_not_found() {
+        given_now("2024-01-15T10:00:00Z");
+
+        Long nonExistentUserId = 999L;
+
+        ResponseEntity<Void> response = dailyGoldRewardController.claimDailyGold(nonExistentUserId);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
+        assertThat(dailyGoldRewardMapper.countByUserAndDate(nonExistentUserId, 20240115))
+                .isEqualTo(0);
+    }
 }
