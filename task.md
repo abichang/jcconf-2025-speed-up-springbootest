@@ -77,7 +77,7 @@ Controller → Service → Repository Interface → Repository Impl → Mapper
 - [x] Task 29: DailyGoldRewardServiceTest - claim_all_ok
 - [x] Task 30: DailyGoldRewardServiceTest - duplicate_claim
 - [x] Task 31: DailyGoldRewardServiceTest - handle_user_not_found
-- [ ] Task 32: DailyGoldRewardServiceTest - handle_wallet_not_found
+- [x] Task 32: DailyGoldRewardServiceTest - handle_wallet_not_found
 
 #### DailyGoldRewardServiceTransactionalTest (@SpringBootTest)
 
