@@ -12,6 +12,8 @@ import com.abicoding.jcconf.speed_up_springbootest.util.TimeUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.time.Instant;
 
@@ -45,14 +47,15 @@ class DailyGoldRewardControllerIntegrationTest {
     }
 
     @Test
-    void claim_all_ok() throws Exception {
+    void claim_all_ok() {
         given_now("2024-01-15T10:00:00Z");
 
         Long userId = given_user();
 
         given_wallet(userId, 500L, 1L);
 
-        dailyGoldRewardController.claimDailyGold(userId);
+        ResponseEntity<Void> response = dailyGoldRewardController.claimDailyGold(userId);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         Wallet updatedWallet = walletRepository.getByUserId(userId);
         assertThat(updatedWallet.getGold()).isEqualTo(510L);
@@ -84,5 +87,26 @@ class DailyGoldRewardControllerIntegrationTest {
         wallet.setCreatedAt(0L);
         wallet.setUpdatedAt(0L);
         walletMapper.insert(wallet);
+    }
+
+    @Test
+    void claim_duplicate_same_day() {
+        given_now("2024-01-15T10:00:00Z");
+
+        Long userId = given_user();
+        given_wallet(userId, 500L, 1L);
+
+        ResponseEntity<Void> firstResponse = dailyGoldRewardController.claimDailyGold(userId);
+        assertThat(firstResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        ResponseEntity<Void> secondResponse = dailyGoldRewardController.claimDailyGold(userId);
+        assertThat(secondResponse.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+
+        Wallet updatedWallet = walletRepository.getByUserId(userId);
+        assertThat(updatedWallet.getGold()).isEqualTo(510L);
+        assertThat(updatedWallet.getVersion()).isEqualTo(2L);
+
+        assertThat(dailyGoldRewardMapper.countByUserAndDate(userId, 20240115))
+                .isEqualTo(1);
     }
 }
