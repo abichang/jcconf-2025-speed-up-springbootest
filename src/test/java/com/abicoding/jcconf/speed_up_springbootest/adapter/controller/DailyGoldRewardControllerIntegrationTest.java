@@ -150,4 +150,36 @@ class DailyGoldRewardControllerIntegrationTest {
         assertThat(dailyGoldRewardMapper.countByUserAndDate(userId, 20240116))
                 .isEqualTo(1);
     }
+
+    @Test
+    void claim_multiple_users_same_day() {
+        given_now("2024-01-15T10:00:00Z");
+
+        Long user1Id = given_user("user1");
+        given_wallet(user1Id, 100L, 1L);
+
+        ResponseEntity<Void> response1 = dailyGoldRewardController.claimDailyGold(user1Id);
+        assertThat(response1.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        Wallet wallet1 = walletRepository.getByUserId(user1Id);
+        assertThat(wallet1.getGold()).isEqualTo(110L);
+        assertThat(wallet1.getVersion()).isEqualTo(2L);
+
+        assertThat(dailyGoldRewardMapper.countByUserAndDate(user1Id, 20240115))
+                .isEqualTo(1);
+
+
+        Long user2Id = given_user("user2");
+        given_wallet(user2Id, 200L, 1L);
+
+        ResponseEntity<Void> response2 = dailyGoldRewardController.claimDailyGold(user2Id);
+        assertThat(response2.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        Wallet wallet2 = walletRepository.getByUserId(user2Id);
+        assertThat(wallet2.getGold()).isEqualTo(210L);
+        assertThat(wallet2.getVersion()).isEqualTo(2L);
+
+        assertThat(dailyGoldRewardMapper.countByUserAndDate(user2Id, 20240115))
+                .isEqualTo(1);
+    }
 }

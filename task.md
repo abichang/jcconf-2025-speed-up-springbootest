@@ -518,5 +518,5 @@ CREATE TABLE daily_gold_reward
 - [x] Task 58: 重寫 claim_duplicate_same_day - 測試同一天重複領取的錯誤處理
 - [x] Task 59: 重寫 claim_user_not_found - 測試使用者不存在的異常處理
 - [x] Task 60: 新增 claim_utc_midnight_reset - 測試 UTC 午夜重設功能
-- [ ] Task 61: 新增 claim_multiple_users_same_day - 測試多用戶同一天領取
+- [x] Task 61: 新增 claim_multiple_users_same_day - 測試多用戶同一天領取
 - [ ] Task 62: Rename DailyGoldRewardControllerTest to DailyGoldRewardControllerIsolatedTest
