@@ -50,7 +50,7 @@ class DailyGoldRewardControllerIntegrationTest {
     void claim_all_ok() {
         given_now("2024-01-15T10:00:00Z");
 
-        Long userId = given_user();
+        Long userId = given_user("user1");
 
         given_wallet(userId, 500L, 1L);
 
@@ -70,9 +70,9 @@ class DailyGoldRewardControllerIntegrationTest {
         doReturn(now).when(timeUtils).now();
     }
 
-    private Long given_user() {
+    private Long given_user(String username) {
         UserDbDto user = new UserDbDto();
-        user.setUsername("testuser");
+        user.setUsername(username);
         user.setCreatedAt(0L);
         user.setUpdatedAt(0L);
         userMapper.insert(user);
@@ -93,7 +93,7 @@ class DailyGoldRewardControllerIntegrationTest {
     void claim_duplicate_same_day() {
         given_now("2024-01-15T10:00:00Z");
 
-        Long userId = given_user();
+        Long userId = given_user("user1");
         given_wallet(userId, 500L, 1L);
 
         ResponseEntity<Void> firstResponse = dailyGoldRewardController.claimDailyGold(userId);
@@ -125,7 +125,7 @@ class DailyGoldRewardControllerIntegrationTest {
 
     @Test
     void claim_utc_midnight_reset() {
-        Long userId = given_user();
+        Long userId = given_user("user1");
         given_wallet(userId, 500L, 1L);
 
         given_now("2024-01-15T10:00:00Z");
