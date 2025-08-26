@@ -514,7 +514,7 @@ CREATE TABLE daily_gold_reward
 ### 使用 @SystemDbTest + 真實 H2 資料庫整合測試
 
 - [x] Task 56: 設置 @SystemDbTest 測試基礎架構
-- [ ] Task 57: 重寫 claim_all_ok - 使用真實資料庫驗證完整流程
+- [x] Task 57: 重寫 claim_all_ok - 使用真實資料庫驗證完整流程
 - [ ] Task 58: 重寫 claim_duplicate_same_day - 測試同一天重複領取的錯誤處理
 - [ ] Task 59: 重寫 claim_user_not_found - 測試使用者不存在的異常處理
 - [ ] Task 60: 重寫 claim_wallet_not_found - 測試錢包不存在的異常處理
