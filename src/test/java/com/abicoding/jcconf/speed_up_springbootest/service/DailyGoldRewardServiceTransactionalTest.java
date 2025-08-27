@@ -4,13 +4,12 @@ import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.UserDbDto;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.UserMapper;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.WalletDbDto;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.WalletMapper;
+import com.abicoding.jcconf.speed_up_springbootest.common.SystemTestBase;
 import com.abicoding.jcconf.speed_up_springbootest.entity.DailyGoldReward;
 import com.abicoding.jcconf.speed_up_springbootest.entity.RewardDate;
 import com.abicoding.jcconf.speed_up_springbootest.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -18,8 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 
-@SpringBootTest
-class DailyGoldRewardServiceTransactionalTest {
+class DailyGoldRewardServiceTransactionalTest extends SystemTestBase {
 
     @Autowired
     private DailyGoldRewardService dailyGoldRewardService;
@@ -29,9 +27,6 @@ class DailyGoldRewardServiceTransactionalTest {
 
     @Autowired
     private UserMapper userMapper;
-
-    @MockBean
-    private DailyGoldRewardRepository dailyGoldRewardRepository;
 
     @Test
     void claim_fail_wallet_rollback() {
