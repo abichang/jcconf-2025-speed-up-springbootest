@@ -7,10 +7,8 @@ import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.WalletRepo
 import com.abicoding.jcconf.speed_up_springbootest.common.SystemTestBase;
 import com.abicoding.jcconf.speed_up_springbootest.entity.Wallet;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardService;
-import com.abicoding.jcconf.speed_up_springbootest.util.TimeUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +21,6 @@ import static org.mockito.Mockito.doReturn;
 
 class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
 
-    private final TimeUtils timeUtils = Mockito.mock(TimeUtils.class);
     private WalletRepositoryImpl walletRepository;
     private DailyGoldRewardController dailyGoldRewardController;
 
