@@ -5,8 +5,6 @@ import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.WalletNotF
 import com.abicoding.jcconf.speed_up_springbootest.common.SystemTestBase;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldenClaimedException;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -14,9 +12,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class DailyGoldRewardControllerIsolatedTest extends SystemTestBase {
-
-    @Autowired
-    private MockMvc mockMvc;
 
     @Test
     void claim_all_ok() throws Exception {
