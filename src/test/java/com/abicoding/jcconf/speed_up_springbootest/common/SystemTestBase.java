@@ -29,6 +29,10 @@ public abstract class SystemTestBase {
 
     @AfterEach
     void baseTearDown() {
+        truncateAllDbTables();
+    }
+
+    private void truncateAllDbTables() {
         String[] allTableNames = getAllTableNamesMapper.getAllTableNames();
         for (String tableName : allTableNames) {
             if (!"flyway_schema_history".equalsIgnoreCase(tableName)) {
