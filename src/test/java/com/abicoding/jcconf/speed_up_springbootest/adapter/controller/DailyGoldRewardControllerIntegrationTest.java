@@ -4,14 +4,14 @@ import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.*;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.DailyGoldRewardRepositoryImpl;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.UserRepositoryImpl;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.WalletRepositoryImpl;
-import com.abicoding.jcconf.speed_up_springbootest.common.InjectMapper;
-import com.abicoding.jcconf.speed_up_springbootest.common.SystemDbTest;
+import com.abicoding.jcconf.speed_up_springbootest.common.SystemTestBase;
 import com.abicoding.jcconf.speed_up_springbootest.entity.Wallet;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardService;
 import com.abicoding.jcconf.speed_up_springbootest.util.TimeUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -20,20 +20,20 @@ import java.time.Instant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 
-@SystemDbTest
-class DailyGoldRewardControllerIntegrationTest {
+
+class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
 
     private final TimeUtils timeUtils = Mockito.mock(TimeUtils.class);
     private WalletRepositoryImpl walletRepository;
     private DailyGoldRewardController dailyGoldRewardController;
 
-    @InjectMapper
+    @Autowired
     private UserMapper userMapper;
 
-    @InjectMapper
+    @Autowired
     private WalletMapper walletMapper;
 
-    @InjectMapper
+    @Autowired
     private DailyGoldRewardMapper dailyGoldRewardMapper;
 
     @BeforeEach
@@ -111,7 +111,7 @@ class DailyGoldRewardControllerIntegrationTest {
     }
 
     @Test
-    void claim_user_not_found() {
+    void user_not_found() {
         given_now("2024-01-15T10:00:00Z");
 
         Long nonExistentUserId = 999L;
