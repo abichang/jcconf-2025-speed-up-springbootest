@@ -112,14 +112,15 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
                 .isEqualTo(1);
     }
 
+    @SneakyThrows
     @Test
     void user_not_found() {
         given_now("2024-01-15T10:00:00Z");
 
         Long nonExistentUserId = 999L;
 
-        ResponseEntity<Void> response = dailyGoldRewardController.claimDailyGold(nonExistentUserId);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        mockMvc.perform(post("/user/{user_id}/daily-golden", nonExistentUserId))
+                .andExpect(status().isNotFound());
 
         assertThat(dailyGoldRewardMapper.countByUserAndDate(nonExistentUserId, 20240115))
                 .isEqualTo(0);
