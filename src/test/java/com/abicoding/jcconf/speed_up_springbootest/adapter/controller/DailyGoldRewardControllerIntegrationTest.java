@@ -7,6 +7,7 @@ import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.WalletRepo
 import com.abicoding.jcconf.speed_up_springbootest.common.SystemTestBase;
 import com.abicoding.jcconf.speed_up_springbootest.entity.Wallet;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,13 @@ import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
 
+    @Autowired
     private WalletRepositoryImpl walletRepository;
     private DailyGoldRewardController dailyGoldRewardController;
 
@@ -35,7 +39,6 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
 
     @BeforeEach
     void setUp() {
-        walletRepository = new WalletRepositoryImpl(walletMapper);
         dailyGoldRewardController = new DailyGoldRewardController(new DailyGoldRewardService(
                 new UserRepositoryImpl(userMapper),
                 walletRepository,
@@ -43,6 +46,7 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
                 timeUtils));
     }
 
+    @SneakyThrows
     @Test
     void claim_all_ok() {
         given_now("2024-01-15T10:00:00Z");
@@ -51,8 +55,8 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
 
         given_wallet(userId, 500L, 1L);
 
-        ResponseEntity<Void> response = dailyGoldRewardController.claimDailyGold(userId);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        mockMvc.perform(post("/user/{user_id}/daily-golden", userId))
+                .andExpect(status().isOk());
 
         Wallet updatedWallet = walletRepository.getByUserId(userId);
         assertThat(updatedWallet.getGold()).isEqualTo(510L);

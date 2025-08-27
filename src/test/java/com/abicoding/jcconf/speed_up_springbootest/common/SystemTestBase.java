@@ -27,7 +27,6 @@ public abstract class SystemTestBase {
     @Autowired
     private TruncateTableMapper truncateTableMapper;
 
-
     @AfterEach
     void baseTearDown() {
         String[] allTableNames = getAllTableNamesMapper.getAllTableNames();

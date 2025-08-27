@@ -6,20 +6,12 @@ import com.abicoding.jcconf.speed_up_springbootest.common.SystemTestBase;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldenClaimedException;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class DailyGoldRewardControllerIsolatedTest extends SystemTestBase {
 
-    @Test
-    void claim_all_ok() throws Exception {
-        doNothing().when(dailyGoldRewardService).claim(1L);
-
-        mockMvc.perform(post("/user/1/daily-golden"))
-                .andExpect(status().isOk());
-    }
 
     @Test
     void duplicate_claim() throws Exception {
