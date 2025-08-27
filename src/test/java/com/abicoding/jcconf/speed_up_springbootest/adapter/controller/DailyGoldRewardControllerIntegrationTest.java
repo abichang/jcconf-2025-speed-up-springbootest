@@ -185,4 +185,10 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
         assertThat(dailyGoldRewardMapper.countByUserAndDate(user2Id, 20240115))
                 .isEqualTo(1);
     }
+
+    @Test
+    void invalid_user_id() throws Exception {
+        mockMvc.perform(post("/user/invalid/daily-golden"))
+                .andExpect(status().isBadRequest());
+    }
 }
