@@ -20,9 +20,6 @@ import static org.mockito.Mockito.doThrow;
 class DailyGoldRewardServiceTransactionalTest extends SystemTestBase {
 
     @Autowired
-    private DailyGoldRewardService dailyGoldRewardService;
-
-    @Autowired
     private WalletMapper walletMapper;
 
     @Autowired
