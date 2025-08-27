@@ -1,14 +1,10 @@
 package com.abicoding.jcconf.speed_up_springbootest.adapter.controller;
 
 import com.abicoding.jcconf.speed_up_springbootest.adapter.mapper.*;
-import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.DailyGoldRewardRepositoryImpl;
-import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.UserRepositoryImpl;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.WalletRepositoryImpl;
 import com.abicoding.jcconf.speed_up_springbootest.common.SystemTestBase;
 import com.abicoding.jcconf.speed_up_springbootest.entity.Wallet;
-import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardService;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,7 +20,6 @@ class DailyGoldRewardControllerTest extends SystemTestBase {
 
     @Autowired
     private WalletRepositoryImpl walletRepository;
-    private DailyGoldRewardController dailyGoldRewardController;
 
     @Autowired
     private UserMapper userMapper;
@@ -34,15 +29,6 @@ class DailyGoldRewardControllerTest extends SystemTestBase {
 
     @Autowired
     private DailyGoldRewardMapper dailyGoldRewardMapper;
-
-    @BeforeEach
-    void setUp() {
-        dailyGoldRewardController = new DailyGoldRewardController(new DailyGoldRewardService(
-                new UserRepositoryImpl(userMapper),
-                walletRepository,
-                new DailyGoldRewardRepositoryImpl(dailyGoldRewardMapper),
-                timeUtils));
-    }
 
     @SneakyThrows
     @Test
