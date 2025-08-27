@@ -2,6 +2,7 @@ package com.abicoding.jcconf.speed_up_springbootest.common;
 
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardRepository;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardService;
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,4 +19,19 @@ public abstract class SystemTestBase {
     protected DailyGoldRewardService dailyGoldRewardService;
     @Autowired
     protected MockMvc mockMvc;
+    @Autowired
+    private GetAllTableNamesMapper getAllTableNamesMapper;
+    @Autowired
+    private TruncateTableMapper truncateTableMapper;
+
+
+    @AfterEach
+    void baseTearDown() {
+        String[] allTableNames = getAllTableNamesMapper.getAllTableNames();
+        for (String tableName : allTableNames) {
+            if (!"flyway_schema_history".equalsIgnoreCase(tableName)) {
+                truncateTableMapper.truncateTable(tableName);
+            }
+        }
+    }
 }
