@@ -3,7 +3,6 @@ package com.abicoding.jcconf.speed_up_springbootest.adapter.controller;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.UserNotFoundException;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.WalletNotFoundException;
 import com.abicoding.jcconf.speed_up_springbootest.common.SystemTestBase;
-import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldenClaimedException;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.doThrow;
@@ -12,15 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class DailyGoldRewardControllerIsolatedTest extends SystemTestBase {
 
-
-    @Test
-    void duplicate_claim() throws Exception {
-        doThrow(new DailyGoldenClaimedException("userId=1"))
-                .when(dailyGoldRewardService).claim(1L);
-
-        mockMvc.perform(post("/user/1/daily-golden"))
-                .andExpect(status().isConflict());
-    }
 
     @Test
     void user_not_found() throws Exception {

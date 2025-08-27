@@ -90,6 +90,7 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
         walletMapper.insert(wallet);
     }
 
+    @SneakyThrows
     @Test
     void claim_duplicate_same_day() {
         given_now("2024-01-15T10:00:00Z");
@@ -97,11 +98,11 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
         Long userId = given_user("user1");
         given_wallet(userId, 500L, 1L);
 
-        ResponseEntity<Void> firstResponse = dailyGoldRewardController.claimDailyGold(userId);
-        assertThat(firstResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        mockMvc.perform(post("/user/{user_id}/daily-golden", userId))
+                .andExpect(status().isOk());
 
-        ResponseEntity<Void> secondResponse = dailyGoldRewardController.claimDailyGold(userId);
-        assertThat(secondResponse.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+        mockMvc.perform(post("/user/{user_id}/daily-golden", userId))
+                .andExpect(status().isConflict());
 
         Wallet updatedWallet = walletRepository.getByUserId(userId);
         assertThat(updatedWallet.getGold()).isEqualTo(510L);
