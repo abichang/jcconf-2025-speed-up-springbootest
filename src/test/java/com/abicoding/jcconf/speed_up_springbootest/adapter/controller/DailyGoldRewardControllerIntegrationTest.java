@@ -11,8 +11,6 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.time.Instant;
 
@@ -155,6 +153,7 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
                 .isEqualTo(1);
     }
 
+    @SneakyThrows
     @Test
     void claim_multiple_users_same_day() {
         given_now("2024-01-15T10:00:00Z");
@@ -162,8 +161,8 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
         Long user1Id = given_user("user1");
         given_wallet(user1Id, 100L, 1L);
 
-        ResponseEntity<Void> response1 = dailyGoldRewardController.claimDailyGold(user1Id);
-        assertThat(response1.getStatusCode()).isEqualTo(HttpStatus.OK);
+        mockMvc.perform(post("/user/{user_id}/daily-golden", user1Id))
+                .andExpect(status().isOk());
 
         Wallet wallet1 = walletRepository.getByUserId(user1Id);
         assertThat(wallet1.getGold()).isEqualTo(110L);
@@ -176,8 +175,8 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
         Long user2Id = given_user("user2");
         given_wallet(user2Id, 200L, 1L);
 
-        ResponseEntity<Void> response2 = dailyGoldRewardController.claimDailyGold(user2Id);
-        assertThat(response2.getStatusCode()).isEqualTo(HttpStatus.OK);
+        mockMvc.perform(post("/user/{user_id}/daily-golden", user2Id))
+                .andExpect(status().isOk());
 
         Wallet wallet2 = walletRepository.getByUserId(user2Id);
         assertThat(wallet2.getGold()).isEqualTo(210L);
