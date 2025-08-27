@@ -126,14 +126,15 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
                 .isEqualTo(0);
     }
 
+    @SneakyThrows
     @Test
     void claim_utc_midnight_reset() {
         Long userId = given_user("user1");
         given_wallet(userId, 500L, 1L);
 
         given_now("2024-01-15T10:00:00Z");
-        ResponseEntity<Void> firstResponse = dailyGoldRewardController.claimDailyGold(userId);
-        assertThat(firstResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        mockMvc.perform(post("/user/{user_id}/daily-golden", userId))
+                .andExpect(status().isOk());
 
         Wallet walletAfterFirstClaim = walletRepository.getByUserId(userId);
         assertThat(walletAfterFirstClaim.getGold()).isEqualTo(510L);
@@ -143,8 +144,8 @@ class DailyGoldRewardControllerIntegrationTest extends SystemTestBase {
                 .isEqualTo(1);
 
         given_now("2024-01-16T02:00:00Z");
-        ResponseEntity<Void> secondResponse = dailyGoldRewardController.claimDailyGold(userId);
-        assertThat(secondResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        mockMvc.perform(post("/user/{user_id}/daily-golden", userId))
+                .andExpect(status().isOk());
 
         Wallet walletAfterSecondClaim = walletRepository.getByUserId(userId);
         assertThat(walletAfterSecondClaim.getGold()).isEqualTo(520L);
