@@ -4,10 +4,13 @@ import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardReposi
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardService;
 import com.abicoding.jcconf.speed_up_springbootest.util.TimeUtils;
 import org.junit.jupiter.api.AfterEach;
+import org.mockito.Mockito;
+import org.mockito.internal.util.MockUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -26,10 +29,13 @@ public abstract class SystemTestBase {
     private GetAllTableNamesMapper getAllTableNamesMapper;
     @Autowired
     private TruncateTableMapper truncateTableMapper;
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @AfterEach
     void baseTearDown() {
         truncateAllDbTables();
+        resetAllFakeBean();
     }
 
     private void truncateAllDbTables() {
@@ -37,6 +43,15 @@ public abstract class SystemTestBase {
         for (String tableName : allTableNames) {
             if (!"flyway_schema_history".equalsIgnoreCase(tableName)) {
                 truncateTableMapper.truncateTable(tableName);
+            }
+        }
+    }
+
+    private void resetAllFakeBean() {
+        for (String beanName : applicationContext.getBeanDefinitionNames()) {
+            Object bean = applicationContext.getBean(beanName);
+            if (MockUtil.isMock(bean) || MockUtil.isSpy(bean)) {
+                Mockito.reset(bean);
             }
         }
     }
