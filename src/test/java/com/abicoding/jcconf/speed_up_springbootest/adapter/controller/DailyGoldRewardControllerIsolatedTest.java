@@ -2,13 +2,10 @@ package com.abicoding.jcconf.speed_up_springbootest.adapter.controller;
 
 import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.UserNotFoundException;
 import com.abicoding.jcconf.speed_up_springbootest.adapter.repository.WalletNotFoundException;
-import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldRewardService;
+import com.abicoding.jcconf.speed_up_springbootest.common.SystemTestBase;
 import com.abicoding.jcconf.speed_up_springbootest.service.DailyGoldenClaimedException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.doNothing;
@@ -16,15 +13,10 @@ import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class DailyGoldRewardControllerIsolatedTest {
+class DailyGoldRewardControllerIsolatedTest extends SystemTestBase {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
-    private DailyGoldRewardService dailyGoldRewardService;
 
     @Test
     void claim_all_ok() throws Exception {
