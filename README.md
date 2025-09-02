@@ -28,24 +28,9 @@
 
 ### 成果
 
-透過以上優化，我們將測試執行時間從 **4 分 02 秒** 縮短至 **1 分 16 秒**，大幅改善了 75% 的執行效率。
+透過以上優化，我們將產品後端中的單元測試執行時間從 **4 分 02 秒** 縮短至 **1 分 16 秒**，大幅改善了 75% 的執行效率。
 
-## 專案結構
-
-本專案採用典型的 Spring Boot 專案結構，核心程式碼位於 `src` 目錄下：
-
-- `src/main/java`: 應用程式的主要原始碼
-    - `adapter`: 包含對外介接的 Controller，以及與資料庫互動的 Repository 實作。
-    - `entity`: 定義資料庫的實體（Entity）。
-    - `service`: 核心商業邏輯。
-- `src/main/resources`: 資源檔
-    - `application.properties`: Spring Boot 設定檔。
-    - `db/migration`: [Flyway](https://flywaydb.org/) 資料庫遷移腳本。
-- `src/test/java`: 測試程式碼
-    - `adapter/controller`: Controller 層級的測試。
-    - `service`: Service 層級的測試。
-    - `common`: 測試共用的基礎設施，例如 `SystemTestBase`。
-- `pom.xml`: Maven 專案設定檔，定義專案相依性與建置流程。
+# 此範例程式
 
 ## 如何開始
 
