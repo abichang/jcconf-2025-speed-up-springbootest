@@ -32,24 +32,38 @@
 
 ## 專案結構
 
-（待補：需要分析實際程式碼後填寫）
+本專案採用典型的 Spring Boot 專案結構，核心程式碼位於 `src` 目錄下：
+
+- `src/main/java`: 應用程式的主要原始碼
+    - `adapter`: 包含對外介接的 Controller，以及與資料庫互動的 Repository 實作。
+    - `entity`: 定義資料庫的實體（Entity）。
+    - `service`: 核心商業邏輯。
+- `src/main/resources`: 資源檔
+    - `application.properties`: Spring Boot 設定檔。
+    - `db/migration`: [Flyway](https://flywaydb.org/) 資料庫遷移腳本。
+- `src/test/java`: 測試程式碼
+    - `adapter/controller`: Controller 層級的測試。
+    - `service`: Service 層級的測試。
+    - `common`: 測試共用的基礎設施，例如 `SystemTestBase`。
+- `pom.xml`: Maven 專案設定檔，定義專案相依性與建置流程。
 
 ## 如何開始
 
 ### 環境需求
 
-（待補：需要分析 `pom.xml` 或 `build.gradle` 後填寫）
+- Java 17
+- Maven (專案內已包含 Maven Wrapper，無需額外安裝)
 
 ### 建置專案
 
 ```bash
-#（待補：需要分析專案的建置方式後填寫）
+./mvnw clean package
 ```
 
 ### 執行測試
 
 ```bash
-#（待補：需要分析專案的測試指令後填寫）
+./mvnw clean test
 ```
 
 ## 相關連結
